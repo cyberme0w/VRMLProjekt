@@ -1,7 +1,20 @@
 V1
-    a: done
-    b: siehe V1_SceneGraph.drawio bzw. V1_SceneGraph.png
-    c: 
+a:  done
+b:  siehe V1_SceneGraph.drawio bzw. V1_SceneGraph.png
+c:  Ändert man die Rotation oder Translation von T1 (oberstes Transform), wirkt diese auf beide Figuren (Sphere und Box).
+    Ändert man die untergeordnete Transforms, wirken diese nur auf die entsprechende Figur.
+    Die Eigenschaft scaleOrientation gibt an, bezogen auf welche Axe (bzw. Vektor) die Skalierung durchgeführt wird.
+    Da in der meinErstesVRML Welt keine Skalierungen durchgeführt werden, spielt die scaleOrientation keine Rolle.
+d (zusatz): 
+    Im Material Node der jeweiligen Figur wird die Eigenschaft diffuseColor bzw. emissiveColor gesetzt.
+
+    # VRML
+    material Material{ diffuseColor .0 .255 .0 } # Grün (0,255,0)
+    material Material{ diffuseColor .255 .86 .0 } # Orange ()
+
+
         
+
+
 
 
