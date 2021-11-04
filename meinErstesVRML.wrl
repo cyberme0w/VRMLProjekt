@@ -1,6 +1,6 @@
 #VRML V2.0 utf8
 Transform{
-  rotation 1 1 1 0.785
+  	rotation 1 1 1 0.785
 	children[
 		Transform{
 			rotation 0 0 1 1.05
@@ -21,38 +21,36 @@ Transform{
 		Shape{ # Box
 			appearance Appearance{
 				material Material{
-          diffuseColor .255 .125 .0
+          			diffuseColor .255 .125 .0
 				}
 			}
 			geometry Box{
 				size 1 4 2
 			}
 		}
-
-    DirectionalLight {
-      ambientIntensity 0
-      color 1 1 1
-      global FALSE
-      intensity 1
-      on TRUE
-      effects []
-      shadowVolumes FALSE
-    }
-    
-    Transform {
-      rotation 1 0 0 3.14
-      translation 5 0 0 
-      children [
-        DirectionalLight {
-          ambientIntensity 0
-          color 1 1 1
-          global FALSE
-          intensity 1
-          on TRUE
-          effects []
-          shadowVolumes FALSE
-        }
-      ]
-    }
+		DirectionalLight {
+			ambientIntensity 0
+			color 1 1 1
+			global FALSE
+			intensity 1
+			on TRUE
+			effects []
+			shadowVolumes FALSE
+    	}
+    	Transform {
+      		rotation 1 0 0 3.14
+      		translation 5 0 0 
+      		children [
+        		DirectionalLight {
+          			ambientIntensity 0
+          			color 1 1 1
+          			global FALSE
+          			intensity 1
+          			on TRUE
+          			effects []
+          			shadowVolumes FALSE
+        		}
+			]
+	    }
 	]
 }
