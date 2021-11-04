@@ -5,6 +5,7 @@ c:  Ändert man die Rotation oder Translation von T1 (oberstes Transform), wirkt
     Ändert man die untergeordnete Transforms, wirken diese nur auf die entsprechende Figur.
     Die Eigenschaft scaleOrientation gibt an, bezogen auf welche Axe (bzw. Vektor) die Skalierung durchgeführt wird.
     Da in der meinErstesVRML Welt keine Skalierungen durchgeführt werden, spielt die scaleOrientation keine Rolle.
+
 d (zusatz): 
     Im Material Node der jeweiligen Figur wird die Eigenschaft diffuseColor bzw. emissiveColor gesetzt.
 
@@ -12,9 +13,7 @@ d (zusatz):
     material Material{ diffuseColor .0 .255 .0 } # Grün (0,255,0)
     material Material{ diffuseColor .255 .86 .0 } # Orange ()
 
+e (zusatz):
+    siehe V1_fullSceneGraph.drawio bzw. V1_fullSceneGraph.png
 
-        
-
-
-
-
+V2
