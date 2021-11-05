@@ -12,10 +12,11 @@ DEF	Prisma Shape {
 				0 1 1 #Punkt F
 			]}
 
-			coordIndex [0 2 1 -1 0 1 4 3 -1 1 2 5 4 -1]
+			coordIndex [0 2 1 -1 # A C B
+			            0 1 4 3 -1 # A B E D
+						1 2 5 4 -1] # B C F E
 			#solid FALSE
 		} #IndexedFaceSet
-
 
 		appearance Appearance {
 			material Material {
