@@ -1,28 +1,136 @@
 #VRML V2.0 utf8
-
-DEF	Prisma Shape {
-	
+PROTO TestPrisma [
+	field SFVec3f color 0 1 0 # default = grün
+] {
+	Shape {
 		geometry IndexedFaceSet {
-			coord Coordinate {point	[
+			coord Coordinate {
+				point [
+					0 0 0 #Punkt A
+					1 0 0 #Punkt B
+					0 1 0 #Punkt C
+					0 0 1 #Punkt D
+					1 0 1 #Punkt E
+					0 1 1 #Punkt F
+				]
+			}
+			coordIndex [
+				0 2 1   -1 # A C B
+				0 1 4 3 -1 # A B E D
+				1 2 5 4 -1 # B C F E
+				# eingefügte Flächen für V2c
+				5 2 0 3 -1 # F C A D
+				5 3 4   -1 # F D E
+			]
+			solid TRUE # enable backface culling
+		}
+		appearance Appearance {
+			material Material {
+				diffuseColor IS color
+			} 
+		}
+	}
+}
+
+DEF Prisma Shape {
+    geometry IndexedFaceSet {
+        coord Coordinate {
+			point [
 				0 0 0 #Punkt A
 				1 0 0 #Punkt B
 				0 1 0 #Punkt C
 				0 0 1 #Punkt D
 				1 0 1 #Punkt E
 				0 1 1 #Punkt F
-			]}
+        	]
+		}
 
-			coordIndex [0 2 1 -1 # A C B
-			            0 1 4 3 -1 # A B E D
-						1 2 5 4 -1] # B C F E
-			#solid FALSE
-		} #IndexedFaceSet
+        coordIndex [0 2 1   -1 # A C B
+                    0 1 4 3 -1 # A B E D
+                    1 2 5 4 -1 # B C F E
+                    # eingefügte Flächen für V2c
+                    5 2 0 3 -1 # F C A D
+                    5 3 4   -1 # F D E
+        ]
 
-		appearance Appearance {
-			material Material {
-				diffuseColor 0 1 0
-			} 
+        solid TRUE # enable backface culling
+    }
 
-		} #Appearance
-	} #Prisma
+    appearance Appearance {
+        material Material {
+            diffuseColor 1 0 0 # Rot
+        } 
+    }
+}
+
+########################################################################################
+## Erstellt Kegel mit Spitze in der Mitte des Vierecks BCFE
+## (1) Translation, sodass Spitze im Ursprung liegt
+## (2) Rz(135*), damit Drehung stimmt
+## (3) Translation in die endgültige Position
+Transform {
+    translation 0.5 0.5 0 # (3)
+    children [
+        Transform {
+            rotation 0 0 1 2.35 # (2)
+            children [
+                Transform {
+                    translation 0 -0.5 0.5 # (1)
+                    children[
+                        DEF Kegel Shape {
+                            geometry Cone {
+                                bottom TRUE
+                                bottomRadius 0.5
+                                height 1
+                                side TRUE
+                                solid TRUE # enable backface culling
+                            }
+                            appearance Appearance {
+                                material Material {
+                                    diffuseColor 1 0 0 # Rot
+                                } 
+                            }
+                        }
+                    ]
+                }
+            ]
+        }    
+    ]
+}
+
+#############################
+## Zur Sicherheit wird eine kleine Sphäre mit Mitte 10 10 1 erstellt
+##
+Transform {
+	translation 10 10 1
+	children [
+		DEF Marker Shape {
+			geometry Sphere {
+				radius 0.1
+				solid TRUE
+			}
+			appearance Appearance {
+				material Material {
+					diffuseColor 0 1 0 # Rot
+				} 
+			}
+		}
+	]
+}
+
+#############################
+## Hier wird das zweite Prisma mit Punkt E auf 10 10 1 beschrieben
+## (1) Durch die Größe des Prismas muss der Kegel nur auf 9 10 0 gestellt 
+##     werden, damit E den richtigen Punkt erreicht
+Transform {
+	translation 9 10 0 # (1)
+	children [
+		Transform {
+			scale 1 2 1 # (2)
+			children [
+				TestPrisma { color 1 0 1 }
+			]
+		}
+	]
+}
 
