@@ -1,0 +1,75 @@
+#VRML V2.0 utf8
+
+PROTO Skifahrer [
+    	field SFVec3f color 1 0 0 # default = red
+] {
+    Transform {
+        children [
+            # Head
+            DEF Head Transform {
+                translation 0 10 0
+                children [
+                    Shape {
+                        geometry Sphere {
+                            radius 1.0
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor IS color
+                            }
+                        }
+                    }
+                ]
+            }
+
+            # Body
+            DEF Body Transform {
+                translation 0 7 0
+                children [
+                    Shape {
+                        geometry IndexedFaceSet {
+                            coord Coordinate {
+                                point [
+                                    0 0 0 # 0 
+                                    0 2 0 # 1
+                                    0 2 2 # 2
+                                ]
+                            }
+                            coordIndex [
+                                1 2 0
+                            ]
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor IS color
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+Transform {
+    children [
+        # Weltkoordinatenursprung
+        Shape {
+            geometry Sphere {
+                radius 1.0
+                solid TRUE
+            }
+            appearance Appearance {
+                material Material {
+                    diffuseColor 1 1 1
+                }
+            }
+        }
+
+        Skifahrer { }
+
+
+    ]
+}
