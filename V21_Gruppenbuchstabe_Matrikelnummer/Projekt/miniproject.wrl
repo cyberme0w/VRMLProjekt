@@ -1,8 +1,9 @@
 #VRML V2.0 utf8
 
 PROTO Skifahrer [
-    	field SFVec3f color 1 0 0 # default = red
-] {
+    field SFVec3f color 1 0 0 # default = red
+] 
+{
     Transform {
         children [
             DEF Head Transform {
@@ -141,14 +142,14 @@ PROTO Skifahrer [
                                    -0.25  0.6 -2.5 # Right Foot, Left Side,  Back,  Top    6
                                    -1     0.6 -2.5 # Right Foot, Right Side, Back,  Top    7
                                     # BOTTOM
-                                    1     0.1 -0.5 # Left Foot,  Left Side,  Front, Bot    8
-                                    0.25  0.1 -0.5 # Left Foot,  Right Side, Front, Bot    9
-                                    0.25  0.1 -2.5 # Left Foot,  Right Side, Back,  Bot   10
-                                    1     0.1 -2.5 # Left Foot,  Left Side,  Back,  Bot   11
-                                   -1     0.1 -0.5 # Right Foot, Right Side, Front, Bot   12
-                                   -0.25  0.1 -0.5 # Right Foot, Left Side,  Front, Bot   13
-                                   -0.25  0.1 -2.5 # Right Foot, Left Side,  Back,  Bot   14
-                                   -1     0.1 -2.5 # Right Foot, Right Side, Back,  Bot   15
+                                    1     0.05 -0.5 # Left Foot,  Left Side,  Front, Bot    8
+                                    0.25  0.05 -0.5 # Left Foot,  Right Side, Front, Bot    9
+                                    0.25  0.05 -2.5 # Left Foot,  Right Side, Back,  Bot   10
+                                    1     0.05 -2.5 # Left Foot,  Left Side,  Back,  Bot   11
+                                   -1     0.05 -0.5 # Right Foot, Right Side, Front, Bot   12
+                                   -0.25  0.05 -0.5 # Right Foot, Left Side,  Front, Bot   13
+                                   -0.25  0.05 -2.5 # Right Foot, Left Side,  Back,  Bot   14
+                                   -1     0.05 -2.5 # Right Foot, Right Side, Back,  Bot   15
                                 ]
                             }
                             coordIndex [
@@ -263,6 +264,55 @@ PROTO Skifahrer [
                     }
                 ]
             }
+
+            DEF Skistick Transform {
+                rotation 1 0 0 0.52 # pi/6 -> 30 deg
+                translation 1.2 4 0.75
+                children [
+                    Shape {
+                        geometry Cylinder {
+                            bottom TRUE
+                            height 8
+                            radius 0.05
+                            side TRUE
+                            solid TRUE
+                            top TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor 0 1 0
+                            }
+                        }
+                    }
+                ]
+            }
+            Transform {
+                translation -2.4 0 0
+                children [
+                    USE Skistick
+                ]
+            }
+
+            DEF Ski Transform {
+                translation 0.6 0.05 0
+                children [
+                    Shape {
+                        geometry Box {
+                            size 1 0.1 13
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor 0 1 0
+                            }
+                        }
+                    }
+                ]
+            }
+            Transform {
+                translation -1.2 0 0
+                children [ USE Ski ]
+            }
         ]
     }
 }
@@ -284,6 +334,46 @@ Transform {
 
         Skifahrer { }
 
-
+        DEF Bodenhang Transform {
+            children [
+                DEF FlatSurface Transform {
+                    translation 0 -5 0
+                    children [
+                        Shape {
+                            geometry Box {
+                                size 400 10 420
+                                solid TRUE
+                            }
+                            appearance Appearance {
+                                material Material {
+                                    diffuseColor 1 1 1
+                                }
+                            }
+                        }
+                    ]
+                }
+                Transform {
+                    translation 0 137 -345
+                    children [
+                        DEF InclineSurface Transform {
+                            rotation 1 0 0 0.78
+                            children [
+                                Shape {
+                                    geometry Box {
+                                        size 400 10 400
+                                        solid TRUE
+                                    }
+                                    appearance Appearance {
+                                        material Material {
+                                            diffuseColor 1 1 1
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
     ]
 }
