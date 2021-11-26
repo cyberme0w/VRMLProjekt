@@ -4,8 +4,7 @@ PROTO LiftSaule [
 ]{
     Transform {
         children [
-            # Verticale Säule
-            Transform {
+            DEF VerticalCylinder Transform {
                 children [
                     Shape {
                         geometry Cylinder {
@@ -23,9 +22,7 @@ PROTO LiftSaule [
                         }
                     }
                 ]}
-            
-            # Horizontale Säule
-            Transform {
+            DEF HorizontalCylinder Transform {
                 translation 5 20 0
                 children [
                     Transform {
@@ -49,9 +46,7 @@ PROTO LiftSaule [
                         ]
                     }
                 ]}
-
-            # Kugel
-            Transform {
+            DEF SphereWithLight Transform {
                 translation 12.5 20 0
                 children [
                     Shape {
@@ -61,11 +56,26 @@ PROTO LiftSaule [
                         }
                         appearance Appearance {
                             material Material {
-                                diffuseColor 0 0 0 # Black is ok
+                                emissiveColor 0 1 0 # Green ilumination
                             }
                         }
                     }
-                ]}
+                    SpotLight {
+                        ambientIntensity 0.1
+                        attenuation 0 .02 0 # Licht wird linear schwächer
+                        beamWidth 0.01 # 20 Grad
+                        color 0 1 0 # Grün
+                        cutOffAngle 0.78 # 45 Grad 
+                        direction 1 -1 0
+                        intensity 1.5
+                        radius 600 # Groß genug, dass keine unschönen Ecken zu sehen sind
+                        on TRUE
+                    }
+                    DEF LichtKegel Transform {
+                        # TODO
+                    }
+                ]
+            }
         ]
     }
 }

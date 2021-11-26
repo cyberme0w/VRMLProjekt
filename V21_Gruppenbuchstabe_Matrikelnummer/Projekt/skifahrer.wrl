@@ -2,6 +2,7 @@
 
 PROTO Skifahrer [
     field SFVec3f farbe 1 0 0 # default = red
+    field SFString name "Unbekannter Dude"
 ]{
     Transform {
         children [
@@ -19,6 +20,12 @@ PROTO Skifahrer [
                             }
                         }
                     }
+                    Viewpoint {
+                        description IS name
+                        orientation 0 1 0 3.14
+                        position 0 0 0
+                    }
+                
                 ]
             }
 

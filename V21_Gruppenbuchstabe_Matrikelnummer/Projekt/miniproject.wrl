@@ -13,15 +13,11 @@ EXTERNPROTO LiftSaule [] "liftsaule.wrl"
 ## VIEWPOINTS ##
 ################
 
-# Front View
-Viewpoint {
+DEF FrontView Viewpoint {
     description "Front View"
     position 0 125 400
-    orientation 0 0 1 0
-}
-
-# Bird Eye View
-Transform {
+    orientation 0 0 1 0}
+DEF BirdEyeView Transform {
     rotation 0 1 0 1.5707 # Ry(90)
     children [
         Viewpoint {
@@ -30,43 +26,33 @@ Transform {
             orientation 0 1 1 3.1415
         }
     ]}
-
-# Ski House View
-Transform {
-    translation -130 30 10
+DEF SkiHouseView Viewpoint {
+    description "Ski House View"
+    position -130 30 10
+    orientation 1 -1.5 0 0.4}
+DEF TopHillView Viewpoint {
+    description "Top of Hill View"
+    position 0 450 -600
+    orientation 0 2.5 1 3.14}
+DEF PoleView Transform {
+    translation -150 250 -400
     children [
         Transform {
-            rotation 0 1 0 -0.43 # Ry(-25)
+            rotation 0 1 0 -2.094 # Ry(-120)
             children [
                 Transform {
-                    rotation 1 0 0 0.26 # Rx(15)
+                    rotation 1 0 0 -0.52 # Rx(-30)
                     children [
                         Viewpoint {
-                            description "Ski House View"
+                            description "Top Pole View"
                             position 0 0 0
-                            orientation 0 0 1 0
-                        }   
+                        }
                     ]
                 }
-                
             ]
         }
     ]}
 
-# Top of Hill View 
-Viewpoint {
-    description "Top of Hill View"
-    position 0 450 -600
-    orientation 0 2.5 1 3.14
-}
-
-# Highest Ski Lift Pole View
-Transform {
-    translation -150 200 -200
-    children [
-#        Viewpoint 
-    ]
-}
 
 ###########
 ## WORLD ##
@@ -94,18 +80,18 @@ Transform {
                         DEF Skifahrer1 Transform {
                             translation -25 0 0
                             children [
-                                Skifahrer { farbe .5 0 0  }
+                                Skifahrer { farbe .5 0 0 name "Red" }
                             ]
                         }
                         DEF Skifahrer2 Transform {
                             children [
-                                Skifahrer { farbe 0 .5 0 }
+                                Skifahrer { farbe 0 .5 0 name "Green" }
                             ]
                         }
                         DEF Skifahrer3 Transform {
                             translation 25 0 0
                             children [
-                                Skifahrer { farbe 0 0 .5 }
+                                Skifahrer { farbe 0 0 .5 name "Blue" }
                             ]
                         }
                     ]
