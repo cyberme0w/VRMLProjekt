@@ -1,0 +1,71 @@
+#VRML V2.0 utf8
+
+PROTO LiftSaule [
+]{
+    Transform {
+        children [
+            # Verticale Säule
+            Transform {
+                children [
+                    Shape {
+                        geometry Cylinder {
+                            bottom FALSE
+                            height 50
+                            radius 2
+                            side TRUE
+                            solid TRUE
+                            top TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor .4 .3 .2 # Lighter Brown
+                            }
+                        }
+                    }
+                ]}
+            
+            # Horizontale Säule
+            Transform {
+                translation 5 20 0
+                children [
+                    Transform {
+                        rotation 0 0 1 1.57 # Rz(-90) -> -pi/2
+                        children [
+                            Shape {
+                                geometry Cylinder {
+                                    bottom TRUE
+                                    top TRUE
+                                    height 15
+                                    radius 1
+                                    side TRUE
+                                    solid TRUE
+                                }
+                                appearance Appearance {
+                                    material Material {
+                                        diffuseColor .3 .2 .1 # Darker brown
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]}
+
+            # Kugel
+            Transform {
+                translation 12.5 20 0
+                children [
+                    Shape {
+                        geometry Sphere {
+                            radius 2
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor 0 0 0 # Black is ok
+                            }
+                        }
+                    }
+                ]}
+        ]
+    }
+}

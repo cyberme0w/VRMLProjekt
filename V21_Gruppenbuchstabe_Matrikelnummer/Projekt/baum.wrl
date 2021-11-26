@@ -1,0 +1,45 @@
+#VRML V2.0 utf8
+
+PROTO Baum [
+]{
+    Transform {
+        children [
+            DEF Stamm Transform {
+                children [
+                    Shape {
+                        geometry Cylinder {
+                            bottom FALSE
+                            top FALSE
+                            height 20
+                            radius 1
+                            side TRUE
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor .59 .29 0.0 # Brown TODO: Change to texture
+                            }
+                        }
+                    }
+                ]}
+            DEF Blaetter Transform {
+                translation 0 7 0
+                children [
+                    Shape {
+                        geometry Cone {
+                            bottom TRUE
+                            bottomRadius 4
+                            height 15
+                            side TRUE
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor .0 .3 .1 # Dark green TODO: Change to texture
+                            }
+                        }
+                    }
+                ]}
+        ]
+    }
+}

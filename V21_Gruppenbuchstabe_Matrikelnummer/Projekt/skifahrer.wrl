@@ -1,0 +1,317 @@
+#VRML V2.0 utf8
+
+PROTO Skifahrer [
+    field SFVec3f farbe 1 0 0 # default = red
+]{
+    Transform {
+        children [
+            DEF Head Transform {
+                translation 0 10 0
+                children [
+                    Shape {
+                        geometry Sphere {
+                            radius 1.0
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor IS farbe
+                            }
+                        }
+                    }
+                ]
+            }
+
+            DEF Body Transform {
+                children [
+                    Shape {
+                        geometry IndexedFaceSet {
+                            coord Coordinate {
+                                point [
+                                    # TOP POINTS
+                                    1.3  8.75 -0.75 # Top, back, left     0
+                                   -1.3  8.75 -0.75 # Top, back, right    1
+                                    1.3  8.5   0    # Top, front, left    2
+                                   -1.3  8.5   0    # Top, front, right   3
+
+                                    # BOTTOM POINTS
+                                    1.5  5   -2 # Bot, back, left     4
+                                   -1.5  5   -2 # Bot, back, right    5
+                                    1.5  5   -1 # Bot, front, left    6
+                                   -1.5  5   -1 # Bot, front, right   7
+                                ]
+                            }
+                            coordIndex [
+                                1 3 2 0 -1 # BODY TOP
+                                0 4 5 1 -1 # BODY BACK
+                                3 7 6 2 -1 # BODY FRONT
+                                1 5 7 3 -1 # BODY RIGHT
+                                2 6 4 0 -1 # BODY LEFT
+                            ]
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor IS farbe
+                            }
+                        }
+                    }
+                ]
+            }
+
+            DEF Legs Transform {
+                children [
+                    Shape {
+                        geometry IndexedFaceSet {
+                            coord Coordinate {
+                                point [
+                                    # TOP
+                                    1.5  5   -2 # Left Leg,  Left Side,  Back,  Top         0
+                                    1.5  5   -1 # Left Leg,  Left Side,  Front, Top         1
+                                      0  5   -2 # Middle,                Back               2
+                                      0  5   -1 # Middle,                Front              3
+                                   -1.5  5   -2 # Right Leg, Right Side, Back,  Top         4
+                                   -1.5  5   -1 # Right Leg, Right Side, Front, Top         5
+                                   # MIDDLE
+                                   0.25  3    0 # Left Leg,  Right Side, Front, Middle      6
+                                   1.25  3    0 # Left Leg,  Left Side,  Front, Middle      7
+                                   0.25  3   -1 # Left Leg,  Right Side, Back,  Middle      8
+                                   1.25  3   -1 # Left Leg,  Left Side,  Back,  Middle      9
+                                  -0.25  3    0 # Right Leg, Left Side,  Front, Middle     10
+                                  -1.25  3    0 # Right Leg, Right Side, Front, Middle     11
+                                  -0.25  3   -1 # Right Leg, Left Side,  Back,  Middle     12
+                                  -1.25  3   -1 # Right Leg, Right Side, Back,  Middle     13
+                                  # BOTTOM
+                                  0.25  0.6 -1.5 # Left Leg,  Right Side, Front, Bottom    14 
+                                  1     0.6 -1.5 # Left Leg,  Left Side,  Front, Bottom    15 
+                                  0.25  0.6 -2.5 # Left Leg,  Right Side, Back,  Bottom    16
+                                  1     0.6 -2.5 # Left Leg,  Left Side,  Back,  Bottom    17  
+                                 -0.25  0.6 -1.5 # Right Leg, Left Side,  Front, Bottom    18 
+                                 -1     0.6 -1.5 # Right Leg, Right Side, Front, Bottom    19
+                                 -0.25  0.6 -2.5 # Right Leg, Left Side,  Back,  Bottom    20 
+                                 -1     0.6 -2.5 # Right Leg, Right Side, Back,  Bottom    21 
+                                ]
+                            }
+                            coordIndex [
+                                # LEFT LEG, TOP HALF
+                                0 1 7 9 -1 # Left Leg, Top Half, Left Side
+                                2 0 9 8 -1 # Left Leg, Top Half, Back Side
+                                2 8 6 3 -1 # Left Leg, Top Half, Right Side
+                                1 3 6 7 -1 # Left Leg, Top Half, Front Side
+                                # RIGHT LEG, TOP HALF
+                                3 5 11 10 -1 # Right Leg, Top Half, Front Side
+                                5 4 13 11 -1 # Right Leg, Top Half, Right Side
+                                4 2 12 13 -1 # Right Leg, Top Half, Back Side
+                                2 3 10 12 -1 # Right Leg, Top Half, Left Side
+                                # LEFT LEG, BOTTOM HALF
+                                7 6 14 15 -1 # Left Leg, Bottom Half, Front Side
+                                9 7 15 17 -1 # Left Leg, Bottom Half, Left Side
+                                8 9 17 16 -1 # Left Leg, Bottom Half, Back Side
+                                6 8 16 14 -1 # Left Leg, Bottom Half, Right Side
+                                # RIGHT LEG, BOTTOM HALF
+                                10 11 19 18 -1 # Right Leg, Bottom Half, Front Side 
+                                12 10 18 20 -1 # Right Leg, Bottom Half, Left Side
+                                13 12 20 21 -1 # Right Leg, Bottom Half, Back Side
+                                11 13 21 19 -1 # Right Leg, Bottom Half, Right Side
+                            ]
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor IS farbe
+                            }
+                        }
+                    }
+                ]
+            }
+
+            DEF Feet Transform {
+                children [
+                    Shape {
+                        geometry IndexedFaceSet {
+                            coord Coordinate {
+                                point [
+                                    # TOP
+                                    1     0.6 -0.5 # Left Foot,  Left Side,  Front, Top    0
+                                    0.25  0.6 -0.5 # Left Foot,  Right Side, Front, Top    1
+                                    0.25  0.6 -2.5 # Left Foot,  Right Side, Back,  Top    2
+                                    1     0.6 -2.5 # Left Foot,  Left Side,  Back,  Top    3
+                                   -1     0.6 -0.5 # Right Foot, Right Side, Front, Top    4
+                                   -0.25  0.6 -0.5 # Right Foot, Left Side,  Front, Top    5
+                                   -0.25  0.6 -2.5 # Right Foot, Left Side,  Back,  Top    6
+                                   -1     0.6 -2.5 # Right Foot, Right Side, Back,  Top    7
+                                    # BOTTOM
+                                    1     0.05 -0.5 # Left Foot,  Left Side,  Front, Bot    8
+                                    0.25  0.05 -0.5 # Left Foot,  Right Side, Front, Bot    9
+                                    0.25  0.05 -2.5 # Left Foot,  Right Side, Back,  Bot   10
+                                    1     0.05 -2.5 # Left Foot,  Left Side,  Back,  Bot   11
+                                   -1     0.05 -0.5 # Right Foot, Right Side, Front, Bot   12
+                                   -0.25  0.05 -0.5 # Right Foot, Left Side,  Front, Bot   13
+                                   -0.25  0.05 -2.5 # Right Foot, Left Side,  Back,  Bot   14
+                                   -1     0.05 -2.5 # Right Foot, Right Side, Back,  Bot   15
+                                ]
+                            }
+                            coordIndex [
+                                # LEFT FOOT
+                                0 3  2  1 -1 # Left Foot, Top Side
+                                3 0  8 11 -1 # Left Foot, Left Side
+                                2 3 11 10 -1 # Left Foot, Back Side
+                                1 2 10  9 -1 # Left Foot, Right Side
+                                0 1  9  8 -1 # Left Foot, Front Side
+                                # RIGHT FOOT
+                                6 7  4  5 -1 # Right Foot, Top Side
+                                5 4 12 13 -1 # Right Foot, Front Side
+                                4 7 15 12 -1 # Right Foot, Right Side
+                                6 5 13 14 -1 # Right Foot, Left Side
+                                7 6 14 15 -1 # Right Foot, Back Side
+                            ]
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor IS farbe
+                            }
+                        }
+                    }
+                ]
+            }
+
+            DEF Arms Transform {
+                children [
+                    Shape {
+                        geometry IndexedFaceSet {
+                            coord Coordinate {
+                                point [
+                                    # TOP
+                                    1.75 8.5  -0.4   # Left Arm,  Left Side,  Top, Top      0
+                                    1    8.5  -0.4   # Left Arm,  Right Side, Top, Top      1
+                                    1.75 8    -0.85  # Left Arm,  Left Side,  Bot, Top      2
+                                    1    8    -0.85  # Left Arm,  Right Side, Bot, Top      3
+                                   -1.75 8.5  -0.4   # Right Arm, Right Side, Top, Top      4
+                                   -1    8.5  -0.4   # Right Arm, Left Side,  Top, Top      5
+                                   -1    8    -0.85  # Right Arm, Left Side,  Bot, Top      6
+                                   -1.75 8    -0.85  # Right Arm, Right Side, Bot, Top      7
+
+                                    # BOT
+                                    1.45 6.5  2 # Left Arm,  Left Side,  Top, Bot           8
+                                    1    6.5  2 # Left Arm,  Right Side, Top, Bot           9
+                                    1    6.25 2 # Left Arm,  Right Side, Bot, Bot          10
+                                    1.45 6.25 2 # Left Arm,  Left Side,  Bot, Bot          11
+                                   -1.45 6.5  2 # Right Arm, Right Side, Top, Bot          12
+                                   -1    6.5  2 # Right Arm, Left Side,  Top, Bot          13
+                                   -1    6.25 2 # Right Arm, Left Side,  Bot, Bot          14
+                                   -1.45 6.25 2 # Right Arm, Right Side, Bot, Bot          15
+                                ]
+                            }
+                            coordIndex [
+                                0  2  3  1 -1 # Left Arm, Back Side
+                                0  1  9  8 -1 # Left Arm, Top Side
+                                0  8 11  2 -1 # Left Arm, Left Side 
+                                2 11 10  3 -1 # Left Arm, Bottom Side
+                                9  1  3 10 -1 # Left Arm, Right Side
+                                4  5  6  7 -1 # Right Arm, Back Side
+                                5  4 12 13 -1 # Right Arm, Top Side
+                                4  7 15 12 -1 # Right Arm, Right Side
+                                5 13 14  6 -1 # Right Arm, Left Side
+                                7  6 14 15 -1 # Right Arm, Bottom Side
+
+
+                            ]
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor IS farbe
+                            }
+                        }
+                    }
+                ]
+            }
+
+            DEF Hands Transform {
+                translation 0 6.35 2 #TODO
+                children [
+                    Transform {
+                        translation 1.225 0 0 #TODO
+                        children [
+                            Shape {
+                                geometry Sphere {
+                                    radius 0.35
+                                }
+                                appearance Appearance {
+                                    material Material {
+                                        diffuseColor IS farbe
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                    Transform {
+                        translation -1.225 0 0 #TODO
+                        children [
+                            Shape {
+                                geometry Sphere {
+                                    radius 0.35
+                                }
+                                appearance Appearance {
+                                    material Material {
+                                        diffuseColor IS farbe
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+
+            DEF Skistick Transform {
+                rotation 1 0 0 0.52 # pi/6 -> 30 deg
+                translation 1.2 4 0.75
+                children [
+                    Shape {
+                        geometry Cylinder {
+                            bottom TRUE
+                            height 8
+                            radius 0.05
+                            side TRUE
+                            solid TRUE
+                            top TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor 0 1 0
+                            }
+                        }
+                    }
+                ]
+            }
+            Transform {
+                translation -2.4 0 0
+                children [
+                    USE Skistick
+                ]
+            }
+
+            DEF Ski Transform {
+                translation 0.6 0.05 0
+                children [
+                    Shape {
+                        geometry Box {
+                            size 1 0.1 13
+                            solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor 0 1 0
+                            }
+                        }
+                    }
+                ]
+            }
+            Transform {
+                translation -1.2 0 0
+                children [ USE Ski ]
+            }
+        ]
+    }
+}
