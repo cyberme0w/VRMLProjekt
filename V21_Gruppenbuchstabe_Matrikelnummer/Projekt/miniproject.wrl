@@ -8,6 +8,84 @@ EXTERNPROTO Skifahrer [] "skifahrer.wrl"
 EXTERNPROTO Baum [] "baum.wrl"
 EXTERNPROTO LiftSaule [] "liftsaule.wrl"
 
+##########################################
+## DAY-NIGHT                            ##
+## Handles Background and Light changes ##
+##########################################
+
+Group {
+    children [
+        # DEF Day Background {
+        #     topUrl "skybox/day/miramar_up.tga"
+        #     bottomUrl "skybox/day/miramar_dn.tga"
+        #     frontUrl "skybox/day/miramar_rt.tga"
+        #     backUrl "skybox/day/miramar_lf.tga"
+        #     leftUrl "skybox/day/miramar_bk.tga"
+        #     rightUrl "skybox/day/miramar_ft.tga"
+        # }
+
+        DEF Night Background {
+            topUrl "skybox/night/ypos.png"
+            bottomUrl "skybox/night/yneg.png"
+            frontUrl "skybox/night/zpos.png"
+            backUrl "skybox/night/zneg.png"
+            leftUrl "skybox/night/xneg.png"
+            rightUrl "skybox/night/xpos.png"
+        }
+
+        DEF DayLight DirectionalLight {
+            ambientIntensity 0.2
+            color 1 1 1
+            global TRUE
+            intensity 0.05
+            on TRUE
+            direction 0 -1 0
+        }
+
+        # TODO
+        DEF DayNightButton SphereSensor {
+            offset 0 1 0 0
+            autoOffset TRUE
+        }
+
+        # TODO
+        DEF LightButton SphereSensor {
+            offset 0 1 0 0
+            autoOffset TRUE
+        }
+    ]
+}
+
+Script {
+    field SFBool buttonPressed FALSE
+    field SFBool isDay TRUE
+    
+    field SFString topUrl "skybox/day/miramar_up.tga"
+    field SFString bottomUrl "skybox/day/miramar_dn.tga"
+    field SFString frontUrl "skybox/day/miramar_rt.tga"
+    field SFString backUrl "skybox/day/miramar_lf.tga"
+    field SFString leftUrl "skybox/day/miramar_bk.tga"
+    field SFString rightUrl "skybox/day/miramar_ft.tga"
+
+    field SFFloat ambientLightIntensity 0.5
+
+    url "javascript:
+        function buttonPressed(value, timestamp) {
+            if(isDay && value) {
+                // SET SKYBOX
+                topUrl = 'skybox/night/ypos.png';
+                bottomUrl = 'skybox/night/yneg.png';
+                frontUrl = 'skybox/night/zpos.png';
+                backUrl = 'skybox/night/zneg.png';
+                leftUrl = 'skybox/night/xneg.png';
+                rightUrl = 'skybox/night/xpos.png';
+
+                // MAKE AMBIENT LIGHT DARKER
+                ambientLightIntensity = 0.1;
+            }
+        }"
+}
+
 
 ################
 ## VIEWPOINTS ##
@@ -52,7 +130,24 @@ DEF PoleView Transform {
             ]
         }
     ]}
-
+DEF OverviewView Transform {
+    translation 540 300 125
+    children [
+        Transform {
+            rotation 0 1 0 1.1
+            children [
+                Transform {
+                    rotation 1 0 0 -0.4
+                    children [
+                        Viewpoint {
+                            description "Overview View"
+                            position 0 0 0
+                        }
+                    ]
+                }
+            ]
+        }
+    ]}
 
 ###########
 ## WORLD ##
