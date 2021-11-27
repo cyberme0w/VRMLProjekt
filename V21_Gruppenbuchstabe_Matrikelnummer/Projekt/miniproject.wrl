@@ -15,23 +15,23 @@ EXTERNPROTO LiftSaule [] "liftsaule.wrl"
 
 Group {
     children [
-        # DEF Day Background {
-        #     topUrl "skybox/day/miramar_up.tga"
-        #     bottomUrl "skybox/day/miramar_dn.tga"
-        #     frontUrl "skybox/day/miramar_rt.tga"
-        #     backUrl "skybox/day/miramar_lf.tga"
-        #     leftUrl "skybox/day/miramar_bk.tga"
-        #     rightUrl "skybox/day/miramar_ft.tga"
-        # }
-
-        DEF Night Background {
-            topUrl "skybox/night/ypos.png"
-            bottomUrl "skybox/night/yneg.png"
-            frontUrl "skybox/night/zpos.png"
-            backUrl "skybox/night/zneg.png"
-            leftUrl "skybox/night/xneg.png"
-            rightUrl "skybox/night/xpos.png"
+        DEF Day Background {
+            topUrl "skybox/day/miramar_up.tga"
+            bottomUrl "skybox/day/miramar_dn.tga"
+            frontUrl "skybox/day/miramar_rt.tga"
+            backUrl "skybox/day/miramar_lf.tga"
+            leftUrl "skybox/day/miramar_bk.tga"
+            rightUrl "skybox/day/miramar_ft.tga"
         }
+
+        # DEF Night Background {
+        #     topUrl "skybox/night/ypos.png"
+        #     bottomUrl "skybox/night/yneg.png"
+        #     frontUrl "skybox/night/zpos.png"
+        #     backUrl "skybox/night/zneg.png"
+        #     leftUrl "skybox/night/xneg.png"
+        #     rightUrl "skybox/night/xpos.png"
+        # }
 
         DEF DayLight DirectionalLight {
             ambientIntensity 0.2
@@ -56,6 +56,8 @@ Group {
     ]
 }
 
+
+
 Script {
     field SFBool buttonPressed FALSE
     field SFBool isDay TRUE
@@ -69,7 +71,7 @@ Script {
 
     field SFFloat ambientLightIntensity 0.5
 
-    url "javascript:
+    url "JavaScript:
         function buttonPressed(value, timestamp) {
             if(isDay && value) {
                 // SET SKYBOX
@@ -131,7 +133,7 @@ DEF PoleView Transform {
         }
     ]}
 DEF OverviewView Transform {
-    translation 540 300 125
+    translation 650 350 140
     children [
         Transform {
             rotation 0 1 0 1.1
@@ -153,57 +155,81 @@ DEF OverviewView Transform {
 ## WORLD ##
 ###########
 
-Transform {
+DEF Ursprung Shape {
+    geometry Sphere {
+        radius .1
+        solid TRUE
+    }
+    appearance Appearance {
+        material Material {
+            diffuseColor 1 1 1
+        }
+    }}
+DEF Skifahrer Transform {
+    translation 0 200 -401
     children [
-        DEF Ursprung Shape {
-            geometry Sphere {
-                radius .1
-                solid TRUE
-            }
-            appearance Appearance {
-                material Material {
-                    diffuseColor 1 1 1
-                }
-            }}
-
-        DEF Skifahrer Transform {
-            translation 0 200 -401
+        DEF Skifahrer1RotationX Transform {
+            rotation 0 0 0 0 # Rx(45)
             children [
-                Transform {
-                    rotation 1 0 0 0.78 # Rx(45)
+                DEF Skifahrer1 Transform {
+                    translation 0 0 0
                     children [
-                        DEF Skifahrer1 Transform {
-                            translation -25 0 0
+                        DEF Skifahrer1RotationY Transform {
+                            rotation 0 0 0 0
                             children [
                                 Skifahrer { farbe .5 0 0 name "Red" }
                             ]
                         }
-                        DEF Skifahrer2 Transform {
-                            children [
-                                Skifahrer { farbe 0 .5 0 name "Green" }
-                            ]
-                        }
-                        DEF Skifahrer3 Transform {
-                            translation 25 0 0
-                            children [
-                                Skifahrer { farbe 0 0 .5 name "Blue" }
-                            ]
-                        }
                     ]
                 }
-            ]}
-
-        DEF Bodenhang Transform {
+            ]
+        }
+        Transform {
+            rotation 1 0 0 0.78 # Rx(45)
             children [
-                ###############
-                # OBERFLÄCHEN #
-                ###############
-                DEF FlatBox Transform {
-                    translation 0 -5 0
+                DEF Skifahrer2 Transform {
+                    children [
+                        Skifahrer { farbe 0 .5 0 name "Green" }
+                    ]
+                }
+                DEF Skifahrer3 Transform {
+                    translation 25 0 0
+                    children [
+                        Skifahrer { farbe 0 0 .5 name "Blue" }
+                    ]
+                }
+            ]
+        }
+    ]}
+DEF Bodenhang Transform {
+    children [
+        ###############
+        # OBERFLÄCHEN #
+        ###############
+        DEF FlatBox Transform {
+            translation 0 -5 0
+            children [
+                Shape {
+                    geometry Box {
+                        size 400 10 420
+                        solid TRUE
+                    }
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 1 1 1
+                        }
+                    }
+                }
+            ]}
+        DEF InclinedBox Transform {
+            translation 0 137 -345
+            children [
+                DEF InclineSurface Transform {
+                    rotation 1 0 0 0.78
                     children [
                         Shape {
                             geometry Box {
-                                size 400 10 420
+                                size 400 10 400
                                 solid TRUE
                             }
                             appearance Appearance {
@@ -212,129 +238,504 @@ Transform {
                                 }
                             }
                         }
-                    ]}
-                DEF InclinedBox Transform {
-                    translation 0 137 -345
-                    children [
-                        DEF InclineSurface Transform {
-                            rotation 1 0 0 0.78
-                            children [
-                                Shape {
-                                    geometry Box {
-                                        size 400 10 400
-                                        solid TRUE
-                                    }
-                                    appearance Appearance {
-                                        material Material {
-                                            diffuseColor 1 1 1
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ]}
-                
-                #########
-                # BÄUME #
-                #########
-                DEF Baum1 Transform {
-                    translation 150 10 0
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum2 Transform {
-                    translation 140 10 100
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum3 Transform {
-                    translation 145 10 -100
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum4 Transform {
-                    translation 131 20 -215
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum5 Transform {
-                    translation 135 105 -300
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum6 Transform {
-                    translation 40 10 90
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum7 Transform {
-                    translation 10 10 150
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum8 Transform {
-                    translation -50 10 130
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum9 Transform {
-                    translation 75 10 160
-                    children [
-                        Baum {}
-                    ]}
-                DEF Baum10 Transform {
-                    translation 150 10 40
-                    children [
-                        Baum {}
-                    ]}
-            ]}
-
-        DEF Haus Transform {
-            translation -130 10 10
-            children [
-                Shape {
-                    geometry Box {
-                        size 75 20 125
-                        solid TRUE
-                    }
-                    appearance Appearance {
-                        material Material {
-                           diffuseColor .5 .5 .2
-                        }
-                    }
+                    ]
                 }
             ]}
-
-        DEF LiftSaulen Transform {
-            translation -150 25 -200
+        
+        #########
+        # BÄUME #
+        #########
+        DEF Baum1 Transform {
+            translation 150 10 0
             children [
-                DEF Saule1 Transform {
-                    children [
-                        LiftSaule {}                      
-                    ]}
-                DEF Saule2 Transform {
-                    translation 0 45 -50 # TODO 
-                    children [
-                        LiftSaule {}
-                    ]}
-                DEF Saule3 Transform {
-                    translation 0 95 -100 # TODO
-                    children [
-                        LiftSaule {}
-                    ]}
-                DEF Saule4 Transform {
-                    translation 0 145 -150 # TODO
-                    children [
-                        LiftSaule {}
-                    ]}
-                DEF Saule5 Transform {
-                    translation 0 195 -200 # TODO
-                    children [
-                        LiftSaule {}
-                    ]}
+                Baum {}
             ]}
+        DEF Baum2 Transform {
+            translation 140 10 100
+            children [
+                Baum {}
+            ]}
+        DEF Baum3 Transform {
+            translation 145 10 -100
+            children [
+                Baum {}
+            ]}
+        DEF Baum4 Transform {
+            translation 131 20 -215
+            children [
+                Baum {}
+            ]}
+        DEF Baum5 Transform {
+            translation 135 105 -300
+            children [
+                Baum {}
+            ]}
+        DEF Baum6 Transform {
+            translation 40 10 90
+            children [
+                Baum {}
+            ]}
+        DEF Baum7 Transform {
+            translation 10 10 150
+            children [
+                Baum {}
+            ]}
+        DEF Baum8 Transform {
+            translation -50 10 130
+            children [
+                Baum {}
+            ]}
+        DEF Baum9 Transform {
+            translation 75 10 160
+            children [
+                Baum {}
+            ]}
+        DEF Baum10 Transform {
+            translation 150 10 40
+            children [
+                Baum {}
+            ]}
+    ]}
+DEF Haus Transform {
+    translation -130 10 10
+    children [
+        Shape {
+            geometry Box {
+                size 75 20 125
+                solid TRUE
+            }
+            appearance Appearance {
+                material Material {
+                    diffuseColor .5 .5 .2
+                }
+            }
+        }
+    ]}
+DEF LiftSaulen Transform {
+    translation -150 25 -200
+    children [
+        DEF Saule1 Transform {
+            children [
+                LiftSaule {}                      
+            ]}
+        DEF Saule2 Transform {
+            translation 0 45 -50 # TODO 
+            children [
+                LiftSaule {}
+            ]}
+        DEF Saule3 Transform {
+            translation 0 95 -100 # TODO
+            children [
+                LiftSaule {}
+            ]}
+        DEF Saule4 Transform {
+            translation 0 145 -150 # TODO
+            children [
+                LiftSaule {}
+            ]}
+        DEF Saule5 Transform {
+            translation 0 195 -200 # TODO
+            children [
+                LiftSaule {}
+            ]}
+    ]}
+DEF SkiLeine Transform {
+    translation 0 0 -200
+    children [
+        Transform {
+            children [
+                Shape {
+                    geometry Cylinder {
+                        top FALSE
+                        bottom FALSE
+                        height 100
+                        radius 1
+                        side TRUE
+                        solid TRUE
+                    }
+                }
+            ]
+        }
+    ]}
+
+###############
+## ANIMATION ##
+###############
+
+DEF skiTimer TimeSensor {
+    cycleInterval 30
+    enabled TRUE
+    loop TRUE}
+DEF skiXOriInter OrientationInterpolator {
+    key [
+        # START DOWNHILL
+        0.00000
+        0.30000
+        # ENDE DOWNHILL
+
+        # START STRAIGHT
+        0.30000
+        0.60000
+        # ENDE STRAIGHT
+
+        # START UPHILL
+        0.60000
+        1.00000
+        # ENDE UPHILL
+    ]
+    keyValue [
+        # START DOWNHILL
+        1 0 0 0.78
+        1 0 0 0.78
+        # ENDE DOWNHILL
+
+        # START STRAIGHT
+        1 0 0 0
+        1 0 0 0
+        # ENDE STRAIGHT
+
+        # START UPHILL
+        1 0 0 0.78
+        1 0 0 0.78
+        # ENDE UPHILL
+    ]}
+DEF skiYOriInter OrientationInterpolator {
+    key [
+        ##############
+        ## DOWNHILL ##
+        ##############
+
+        # START ROTATION AM URSPRUNG
+        0.00000
+        0.02000
+        # ENDE ROTATION AM URSPRUNG
+
+        # START KURVE 1
+        0.02000
+        0.08000
+        # ENDE KURVE 1
+
+        # START KURVE 2
+        0.08000
+        0.14000
+        # ENDE KURVE 2
+
+        # START KURVE 3 (90 Grad)
+        0.14000
+        0.18000
+        # ENDE KURVE 3 (90 Grad)
+
+        # START KURVE 4 (klein, 90 Grad)
+        0.18000
+        0.23000
+        # ENDE KURVE 4 (klein, 90 Grad)
+
+        # START KURVE 5 (klein, 90 Grad, Uhrzeiger)
+        0.23000
+        0.30000
+        # ENDE KURVE 5 (klein, 90 Grad, Uhrzeiger)
+
+        ##############
+        ## STRAIGHT ##
+        ##############
+
+        # 
+    ]
+    keyValue [
+        ##############
+        ## DOWNHILL ##
+        ##############
+
+        # START ROTATION AM URSPRUNG
+        0 1 0 0
+        0 1 0 -1.57
+        # ENDE ROTATION AM URSPRUNG
+
+        # START KURVE 1
+        0 1 0 -1.57
+        0 1 0 1.57
+        # ENDE KURVE 1
+
+        # START KURVE 2
+        0 1 0 1.57
+        0 1 0 -1.57
+        # ENDE KURVE 2
+
+        # START KURVE 3 (90 Grad)
+        0 1 0 -1.57
+        0 1 0 0
+        # ENDE KURVE 3 (90 Grad)
+        
+        # START KURVE 4 (klein, 90 Grad)
+        0 1 0 0
+        0 1 0 1.57
+        # ENDE KURVE 4 (klein, 90 Grad)
+
+        # START KURVE 5 (klein, 90 Grad, Uhrzeiger)
+        0 1 0 1.57
+        0 1 0 0
+        # ENDE KURVE 5 (klein, 90 Grad, Uhrzeiger)
+
+        ##############
+        ## STRAIGHT ##
+        ##############
+
     ]
 }
+
+DEF skiPosInter PositionInterpolator {
+    key [
+        ##############
+        ## DOWNHILL ##
+        ##############
+
+        # START ROTATION AM URSPRUNG
+        0.00000
+        0.02000
+        # ENDE ROTATION AM URSPRUNG
+
+        # START KURVE 1
+        0.02000
+        0.02286
+        0.02571
+        0.02857
+        0.03143
+        0.03429
+        0.03714
+        0.04000
+        0.04286
+        0.04571
+        0.04857
+        0.05143
+        0.05429
+        0.05714
+        0.06000
+        0.06286
+        0.06571
+        0.06857
+        0.07143
+        0.07429
+        0.07714
+        0.08000
+        # ENDE KURVE 1
+
+        # START KURVE 2
+        0.08000
+        0.08286
+        0.08571
+        0.08857
+        0.09143
+        0.09429
+        0.09714
+        0.10000
+        0.10286
+        0.10571
+        0.10857
+        0.11143
+        0.11429
+        0.11714
+        0.12000
+        0.12286
+        0.12571
+        0.12857
+        0.13143
+        0.13429
+        0.13714
+        0.14000
+        # ENDE KURVE 2
+
+        # START KURVE 3 (90 Grad)
+        0.14000
+        0.14190
+        0.14381
+        0.14571
+        0.14762
+        0.14952
+        0.15143
+        0.15333
+        0.15524
+        0.15714
+        0.15905
+        0.16095
+        0.16286
+        0.16476
+        0.16667
+        0.16857
+        0.17048
+        0.17238
+        0.17429
+        0.17619
+        0.17810
+        0.18000
+        # ENDE KURVE 3 (90 Grad)
+
+        # START KURVE 4 (klein, 90 Grad)
+        0.18000
+        0.18455
+        0.18909
+        0.19364
+        0.19818
+        0.20273
+        0.20727
+        0.21182
+        0.21636
+        0.22091
+        0.22545
+        0.23000
+        # ENDE KURVE 4 (klein, 90 Grad)
+
+        # START KURVE 5 (klein, 90 Grad, Uhrzeiger)
+        0.23000
+        0.23636
+        0.24273
+        0.24909
+        0.25545
+        0.26182
+        0.26818
+        0.27455
+        0.28091
+        0.28727
+        0.29364
+        0.30000
+        # ENDE KURVE 5 (klein, 90 Grad, Uhrzeiger)
+
+        ##############
+        ## STRAIGHT ##
+        ##############
+    ]
+    keyValue [
+        ##############
+        ## DOWNHILL ##
+        ##############
+
+        # START ROTATION AM URSPRUNG
+        -25.00 0.00 0.00
+        -25.00 0.00 0.00
+        # ENDE ROTATION AM URSPRUNG
+
+        # START KURVE 1
+        -25.00 0.00 0.00
+        -32.00 0.00 0.52
+        -38.85 0.00 2.09
+        -45.39 0.00 4.65
+        -51.48 0.00 8.17
+        -56.97 0.00 12.55
+        -61.75 0.00 17.70
+        -65.70 0.00 23.50
+        -68.75 0.00 29.83
+        -70.82 0.00 36.54
+        -71.87 0.00 43.49
+        -71.87 0.00 50.51
+        -70.82 0.00 57.46
+        -68.75 0.00 64.17
+        -65.70 0.00 70.50
+        -61.75 0.00 76.30
+        -56.97 0.00 81.45
+        -51.48 0.00 85.83
+        -45.39 0.00 89.35
+        -38.85 0.00 91.91
+        -32.00 0.00 93.48
+        -25.00 0.00 94.00
+        # ENDE KURVE 1
+
+        # START KURVE 2
+        -25.00 0.00 94.00
+        -18.00 0.00 94.52
+        -11.15 0.00 96.09
+        -4.61 0.00 98.65
+        1.48 0.00 102.17
+        6.97 0.00 106.55
+        11.75 0.00 111.70
+        15.70 0.00 117.50
+        18.75 0.00 123.83
+        20.82 0.00 130.54
+        21.87 0.00 137.49
+        21.87 0.00 144.51
+        20.82 0.00 151.46
+        18.75 0.00 158.17
+        15.70 0.00 164.50
+        11.75 0.00 170.30
+        6.97 0.00 175.45
+        1.48 0.00 179.83
+        -4.61 0.00 183.35
+        -11.15 0.00 185.91
+        -18.00 0.00 187.48
+        -25.00 0.00 188.00
+        # ENDE KURVE 2
+
+        # START KURVE 3 (90 Grad)
+        -25.00 0.00 188.00
+        -28.51 0.00 188.13
+        -32.00 0.00 188.52
+        -35.46 0.00 189.18
+        -38.85 0.00 190.09
+        -42.17 0.00 191.25
+        -45.39 0.00 192.65
+        -48.50 0.00 194.30
+        -51.48 0.00 196.17
+        -54.30 0.00 198.25
+        -56.97 0.00 200.55
+        -59.45 0.00 203.03
+        -61.75 0.00 205.70
+        -63.83 0.00 208.52
+        -65.70 0.00 211.50
+        -67.35 0.00 214.61
+        -68.75 0.00 217.83
+        -69.91 0.00 221.15
+        -70.82 0.00 224.54
+        -71.48 0.00 228.00
+        -71.87 0.00 231.49
+        -72.00 0.00 235.00
+        # ENDE KURVE 3 (90 Grad)
+
+        # START KURVE 4 (klein, 90 Grad)
+        -72.00 0.00 235.00
+        -71.76 0.00 238.34
+        -71.05 0.00 241.62
+        -69.88 0.00 244.76
+        -68.27 0.00 247.71
+        -66.26 0.00 250.39
+        -63.89 0.00 252.76
+        -61.21 0.00 254.77
+        -58.26 0.00 256.38
+        -55.12 0.00 257.55
+        -51.84 0.00 258.26
+        -48.50 0.00 258.50
+        # ENDE KURVE 4 (klein, 90 Grad)
+
+        # START KURVE 5 (klein, 90 Grad, Uhrzeiger)
+        -48.50 0.00 258.50
+        -45.16 0.00 258.74
+        -41.88 0.00 259.45
+        -38.74 0.00 260.62
+        -35.79 0.00 262.23
+        -33.11 0.00 264.24
+        -30.74 0.00 266.61
+        -28.73 0.00 269.29
+        -27.12 0.00 272.24
+        -25.95 0.00 275.38
+        -25.24 0.00 278.66
+        -25.00 0.00 284.00
+        # ENDE KURVE 5 (klein, 90 Grad, Uhrzeiger)
+        
+        ##############
+        ## STRAIGHT ##
+        ##############
+    ]
+}
+
+ROUTE skiTimer.fraction_changed TO skiYOriInter.set_fraction
+ROUTE skiTimer.fraction_changed TO skiXOriInter.set_fraction
+ROUTE skiTimer.fraction_changed TO skiPosInter.set_fraction
+
+ROUTE skiYOriInter.value_changed TO Skifahrer1RotationY.set_rotation
+ROUTE skiXOriInter.value_changed TO Skifahrer1RotationX.set_rotation
+ROUTE skiPosInter.value_changed TO Skifahrer1.set_translation
+
+
+
+
+
 
 
 
