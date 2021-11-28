@@ -3,6 +3,7 @@
 PROTO Skifahrer [
     field SFVec3f farbe 1 0 0 # default = red
     field SFString name "Unbekannter Dude"
+    field SFBool fackelAn TRUE
 ]{
     Transform {
         children [
@@ -25,10 +26,7 @@ PROTO Skifahrer [
                         orientation 0 1 0 3.14
                         position 0 0 0
                     }
-                
-                ]
-            }
-
+                ]}
             DEF Body Transform {
                 children [
                     Shape {
@@ -63,9 +61,7 @@ PROTO Skifahrer [
                             }
                         }
                     }
-                ]
-            }
-
+                ]}
             DEF Legs Transform {
                 children [
                     Shape {
@@ -129,9 +125,7 @@ PROTO Skifahrer [
                             }
                         }
                     }
-                ]
-            }
-
+                ]}
             DEF Feet Transform {
                 children [
                     Shape {
@@ -180,9 +174,7 @@ PROTO Skifahrer [
                             }
                         }
                     }
-                ]
-            }
-
+                ]}
             DEF Arms Transform {
                 children [
                     Shape {
@@ -221,8 +213,6 @@ PROTO Skifahrer [
                                 4  7 15 12 -1 # Right Arm, Right Side
                                 5 13 14  6 -1 # Right Arm, Left Side
                                 7  6 14 15 -1 # Right Arm, Bottom Side
-
-
                             ]
                             solid TRUE
                         }
@@ -232,14 +222,12 @@ PROTO Skifahrer [
                             }
                         }
                     }
-                ]
-            }
-
+                ]}
             DEF Hands Transform {
-                translation 0 6.35 2 #TODO
+                translation 0 6.35 2
                 children [
                     Transform {
-                        translation 1.225 0 0 #TODO
+                        translation 1.225 0 0
                         children [
                             Shape {
                                 geometry Sphere {
@@ -250,11 +238,60 @@ PROTO Skifahrer [
                                         diffuseColor IS farbe
                                     }
                                 }
+                            }
+                     
+                            DEF TorchLight Transform {
+                                translation 0 2.5 0
+                                children [
+                                    Shape {
+                                        geometry Cylinder {
+                                            top IS fackelAn
+                                            side IS fackelAn
+                                            bottom TRUE
+                                            height 5
+                                            radius 0.2
+                                        }
+                                        appearance Appearance {
+                                            material Material {
+                                                diffuseColor 1 0 0
+                                            }
+                                        }
+                                    }
+                                    Transform {
+                                        translation 0 2.5 0
+                                        children [
+                                            # PointLight {
+                                            #     ambientIntensity 0
+                                            #     color 1 1 1
+                                            #     global TRUE
+                                            #     intensity 1
+                                            #     on TRUE
+                                            # }
+                                            
+                                            DEF HalfTorch SpotLight {
+                                                global TRUE
+                                                ambientIntensity 0.1
+                                                attenuation 0 0.1 0
+                                                color 1 0.1 0.1
+                                                intensity 1.5
+                                                radius 200
+                                                on IS fackelAn
+                                                direction 0 1 0 # down
+                                                cutOffAngle 3.14 # 180
+                                                beamWidth 0.01   # 20 Grad
+                                            }
+                                            Transform {
+                                                rotation 0 0 1 3.14
+                                                children [ USE HalfTorch ]
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         ]
                     }
                     Transform {
-                        translation -1.225 0 0 #TODO
+                        translation -1.225 0 0
                         children [
                             Shape {
                                 geometry Sphere {
@@ -268,9 +305,7 @@ PROTO Skifahrer [
                             }
                         ]
                     }
-                ]
-            }
-
+                ]}
             DEF Skistick Transform {
                 rotation 1 0 0 0.52 # pi/6 -> 30 deg
                 translation 1.2 4 0.75
@@ -290,15 +325,12 @@ PROTO Skifahrer [
                             }
                         }
                     }
-                ]
-            }
+                ]}
             Transform {
                 translation -2.4 0 0
                 children [
                     USE Skistick
-                ]
-            }
-
+                ]}
             DEF Ski Transform {
                 translation 0.6 0.05 0
                 children [
@@ -313,8 +345,7 @@ PROTO Skifahrer [
                             }
                         }
                     }
-                ]
-            }
+                ]}
             Transform {
                 translation -1.2 0 0
                 children [ USE Ski ]

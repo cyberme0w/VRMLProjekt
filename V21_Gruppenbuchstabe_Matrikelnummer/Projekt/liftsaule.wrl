@@ -6,7 +6,7 @@ PROTO LiftSaule [
         children [
             DEF VerticalCylinder Transform {
                 children [
-                    Shape {
+                    DEF Saule Shape {
                         geometry Cylinder {
                             bottom FALSE
                             height 50
@@ -70,9 +70,6 @@ PROTO LiftSaule [
                         intensity 1.5
                         radius 600 # Groß genug, dass keine unschönen Ecken zu sehen sind
                         on TRUE
-                    }
-                    DEF LichtKegel Transform {
-                        # TODO
                     }
                 ]
             }

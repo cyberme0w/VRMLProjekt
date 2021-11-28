@@ -17,7 +17,7 @@ PROTO Baum [
                         }
                         appearance Appearance {
                             material Material {
-                                diffuseColor .59 .29 0.0 # Brown TODO: Change to texture
+                                diffuseColor .59 .29 0.1 # Brown TODO: Change to texture
                             }
                         }
                     }
@@ -35,7 +35,7 @@ PROTO Baum [
                         }
                         appearance Appearance {
                             material Material {
-                                diffuseColor .0 .3 .1 # Dark green TODO: Change to texture
+                                diffuseColor .1 .3 .1 # Dark green TODO: Change to texture
                             }
                         }
                     }

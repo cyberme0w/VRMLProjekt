@@ -174,7 +174,7 @@ DEF Skifahrer Transform {
                         DEF Skifahrer1RotationY Transform {
                             rotation 0 0 0 0
                             children [
-                                Skifahrer { farbe .5 0 0 name "Red" }
+                                Skifahrer { farbe .5 0 0 name "Red" fackelAn TRUE}
                             ]
                         }
                     ]
@@ -186,13 +186,19 @@ DEF Skifahrer Transform {
             children [
                 DEF Skifahrer2 Transform {
                     children [
-                        Skifahrer { farbe 0 .5 0 name "Green" }
+                        Skifahrer { farbe .0 .5 .0 name "Green" fackelAn FALSE }
                     ]
                 }
                 DEF Skifahrer3 Transform {
                     translation 25 0 0
                     children [
-                        Skifahrer { farbe 0 0 .5 name "Blue" }
+                        Skifahrer { farbe .0 .0 .5 name "Blue" fackelAn FALSE }
+                    ]
+                }
+                DEF Skifahrer3 Transform {
+                    translation 50 0 0
+                    children [
+                        Skifahrer { farbe 1.0 1.0 0.0 name "Yellow" fackelAn FALSE }
                     ]
                 }
             ]
@@ -312,6 +318,7 @@ DEF LiftSaulen Transform {
     translation -150 25 -200
     children [
         DEF Saule1 Transform {
+            translation 0 -5 0
             children [
                 LiftSaule {}
             ]}
@@ -479,6 +486,10 @@ DEF skiYOriInter OrientationInterpolator {
         ##############
         ## STRAIGHT ##
         ##############
+        0.30000
+        0.35000
+        0.40000
+        0.42000
 
         ##############
         ##  UPHILL  ##
@@ -528,6 +539,10 @@ DEF skiYOriInter OrientationInterpolator {
         ##############
         ## STRAIGHT ##
         ##############
+        0 1 0 -0.78
+        0 1 0 -0.50
+        0 1 0 -1.57
+        0 1 0 -2.35
 
         ##############
         ##  UPHILL  ##
@@ -658,6 +673,13 @@ DEF skiPosInter PositionInterpolator {
         ##############
         ## STRAIGHT ##
         ##############
+        0.30000 # Start
+        0.35000 # 
+        0.40000 # 
+        0.45000 # 
+        0.50000 # 
+        0.55000 # 
+        0.60000 # Reach
 
         ##############
         ##  UPHILL  ##
@@ -787,6 +809,13 @@ DEF skiPosInter PositionInterpolator {
         ##############
         ## STRAIGHT ##
         ##############
+        -25.00 -200 205
+        -55.00 -200 235
+        -95.00 -200 280
+        -95.00 -200 280
+        -95.00 -200 280
+        -117.00 -200 240
+        -137.00 -200 205
 
         ##############
         ##  UPHILL  ##
