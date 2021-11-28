@@ -835,22 +835,3 @@ ROUTE skiTimer.fraction_changed TO skiPosInter.set_fraction
 ROUTE skiYOriInter.value_changed TO Skifahrer1RotationY.set_rotation
 ROUTE skiXOriInter.value_changed TO Skifahrer1RotationX.set_rotation
 ROUTE skiPosInter.value_changed TO Skifahrer1.set_translation
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

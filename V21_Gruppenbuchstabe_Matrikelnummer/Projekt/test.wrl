@@ -1,0 +1,56 @@
+#VRML V2.0 utf8 
+
+DEF Ursprung Shape {
+    geometry Sphere {
+        radius 1
+    }
+}
+
+
+DEF posInter PositionInterpolator {
+    key [ 0 0.5 1 ] 
+    keyValue [ 
+        0 0 0,
+        0 10 0, # move up
+        10 0 0 # move back
+    ]
+} 
+
+DEF oriInter OrientationInterpolator {
+    key [ 0 0.5 1 ] 
+    keyValue [ 
+        0 0 0 0, 
+        0 1 0 3.14, # rotate right 
+        0 0 1 3.14 # rotate down 
+    ]
+} 	    
+
+DEF ts TimeSensor {
+    cycleInterval 2 
+    loop TRUE
+}
+
+
+DEF communistCubeTrans Transform {
+    translation 0 0 0
+    rotation 1 0 0 0.78
+    children [
+        DEF communistCubeRot Transform {
+            rotation 0 0 0 0
+            children [
+                Shape {
+                    appearance Appearance {
+                        material DEF mat Material { diffuseColor 1 0 0 }
+                    } 
+                    geometry Box {
+                        size 3 3 3
+                    }
+                }
+            ]
+        }
+    ]}
+
+ROUTE ts.fraction_changed TO oriInter.set_fraction
+ROUTE ts.fraction_changed TO posInter.set_fraction
+ROUTE oriInter.value_changed TO communistCubeRot.set_rotation
+ROUTE posInter.value_changed TO communistCubeTrans.set_translation
