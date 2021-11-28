@@ -13,7 +13,7 @@ PROTO Baum [
                             height 20
                             radius 1
                             side TRUE
-                            solid TRUE
+                            #solid TRUE
                         }
                         appearance Appearance {
                             material Material {
@@ -31,7 +31,7 @@ PROTO Baum [
                             bottomRadius 4
                             height 15
                             side TRUE
-                            solid TRUE
+                            #solid TRUE
                         }
                         appearance Appearance {
                             material Material {

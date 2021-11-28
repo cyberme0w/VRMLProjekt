@@ -1,7 +1,7 @@
 #VRML V2.0 utf8
 
 PROTO Skifahrer [
-    field SFVec3f farbe 1 0 0 # default = red
+    field SFColor farbe 1 0 0 # default = red
     field SFString name "Unbekannter Dude"
     field SFBool fackelAn TRUE
 ]{
@@ -13,7 +13,7 @@ PROTO Skifahrer [
                     Shape {
                         geometry Sphere {
                             radius 1.0
-                            solid TRUE
+                            #solid TRUE
                         }
                         appearance Appearance {
                             material Material {
@@ -269,7 +269,7 @@ PROTO Skifahrer [
                                             # }
                                             
                                             DEF HalfTorch SpotLight {
-                                                global TRUE
+                                                #global TRUE
                                                 ambientIntensity 0.1
                                                 attenuation 0 0.1 0
                                                 color 1 0.1 0.1
@@ -316,7 +316,7 @@ PROTO Skifahrer [
                             height 8
                             radius 0.05
                             side TRUE
-                            solid TRUE
+                            #solid TRUE
                             top TRUE
                         }
                         appearance Appearance {
@@ -337,7 +337,7 @@ PROTO Skifahrer [
                     Shape {
                         geometry Box {
                             size 1 0.1 13
-                            solid TRUE
+                            #solid TRUE
                         }
                         appearance Appearance {
                             material Material {

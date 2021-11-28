@@ -12,7 +12,7 @@ PROTO LiftSaule [
                             height 50
                             radius 2
                             side TRUE
-                            solid TRUE
+                            #solid TRUE
                             top TRUE
                         }
                         appearance Appearance {
@@ -35,7 +35,7 @@ PROTO LiftSaule [
                                     height 15
                                     radius 1
                                     side TRUE
-                                    solid TRUE
+                                    #solid TRUE
                                 }
                                 appearance Appearance {
                                     material Material {
@@ -52,7 +52,7 @@ PROTO LiftSaule [
                     Shape {
                         geometry Sphere {
                             radius 2
-                            solid TRUE
+                            #solid TRUE
                         }
                         appearance Appearance {
                             material Material {

@@ -4,7 +4,11 @@
 ## IMPORTS ##
 #############
 
-EXTERNPROTO Skifahrer [] "skifahrer.wrl"
+EXTERNPROTO Skifahrer [ 
+    field SFColor farbe
+    field SFString name
+    field SFBool fackelAn
+    ] "skifahrer.wrl"
 EXTERNPROTO Baum [] "baum.wrl"
 EXTERNPROTO LiftSaule [] "liftsaule.wrl"
 
@@ -36,7 +40,7 @@ Group {
         DEF DayLight DirectionalLight {
             ambientIntensity 0.2
             color 1 1 1
-            global TRUE
+            #global TRUE
             intensity 0.05
             on TRUE
             direction 0 -1 0
@@ -155,7 +159,7 @@ DEF OverviewView Transform {
 DEF Ursprung Shape {
     geometry Sphere {
         radius .1
-        solid TRUE
+        #solid TRUE
     }
     appearance Appearance {
         material Material {
@@ -186,13 +190,13 @@ DEF Skifahrer Transform {
             children [
                 DEF Skifahrer2 Transform {
                     children [
-                        Skifahrer { farbe .0 .5 .0 name "Green" fackelAn FALSE }
+                        Skifahrer { farbe 0 0.5 0 name "Green" fackelAn FALSE }
                     ]
                 }
                 DEF Skifahrer3 Transform {
                     translation 25 0 0
                     children [
-                        Skifahrer { farbe .0 .0 .5 name "Blue" fackelAn FALSE }
+                        Skifahrer { farbe 0 0 0.5 name "Blue" fackelAn FALSE }
                     ]
                 }
                 DEF Skifahrer3 Transform {
@@ -215,7 +219,7 @@ DEF Bodenhang Transform {
                 Shape {
                     geometry Box {
                         size 400 10 420
-                        solid TRUE
+                        #solid TRUE
                     }
                     appearance Appearance {
                         material Material {
@@ -233,7 +237,7 @@ DEF Bodenhang Transform {
                         Shape {
                             geometry Box {
                                 size 400 10 400
-                                solid TRUE
+                                #solid TRUE
                             }
                             appearance Appearance {
                                 material Material {
@@ -305,7 +309,7 @@ DEF Haus Transform {
         Shape {
             geometry Box {
                 size 75 20 125
-                solid TRUE
+                #solid TRUE
             }
             appearance Appearance {
                 material Material {
@@ -356,7 +360,7 @@ DEF LiftDach Transform {
                             geometry Cylinder {
                                 top TRUE
                                 side TRUE
-                                solid TRUE
+                                #solid TRUE
                                 bottom TRUE
                                 height 8
                                 radius 20
@@ -376,7 +380,7 @@ DEF LiftDach Transform {
                             geometry Cylinder {
                                 top TRUE
                                 side TRUE
-                                solid TRUE
+                                #solid TRUE
                                 bottom TRUE
                                 height 8
                                 radius 20
@@ -392,10 +396,10 @@ DEF LiftDach Transform {
                 Shape {
                     geometry Box {
                         size 39.75 8 280
-                        solid FALSE
-                        ccw TRUE
-                        texCoord NULL
-                        divisions -1
+                        #solid FALSE
+                        #ccw TRUE
+                        #texCoord NULL
+                        #divisions -1
                     }
                     appearance Appearance {
                         material Material {
