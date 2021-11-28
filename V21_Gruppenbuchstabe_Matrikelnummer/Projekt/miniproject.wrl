@@ -92,7 +92,6 @@ Script {
 ################
 ## VIEWPOINTS ##
 ################
-
 DEF FrontView Viewpoint {
     description "Front View"
     position 0 125 400
@@ -154,7 +153,6 @@ DEF OverviewView Transform {
 ###########
 ## WORLD ##
 ###########
-
 DEF Ursprung Shape {
     geometry Sphere {
         radius .1
@@ -439,7 +437,14 @@ DEF skiYOriInter OrientationInterpolator {
         ## STRAIGHT ##
         ##############
 
-        # 
+        ##############
+        ##  UPHILL  ##
+        ##############
+        0.60000 # Start Lift
+        0.85000 # End Lift
+        0.90000 # End Rotation 1
+        0.98000 # Straight to starting point and Start Rotation 2
+        1.00000 # End Rotation 2
     ]
     keyValue [
         ##############
@@ -480,9 +485,15 @@ DEF skiYOriInter OrientationInterpolator {
         ## STRAIGHT ##
         ##############
 
-    ]
-}
-
+        ##############
+        ##  UPHILL  ##
+        ##############
+        0 1 0 3.14 # Start Lift
+        0 1 0 3.14 # End Lift
+        0 1 0 1.57 # End Rotation 1
+        0 1 0 1.57 # Straight to starting point and Start Rotation 2
+        0 1 0 0    # End Rotation 2
+    ]}
 DEF skiPosInter PositionInterpolator {
     key [
         ##############
@@ -602,6 +613,16 @@ DEF skiPosInter PositionInterpolator {
         ##############
         ## STRAIGHT ##
         ##############
+
+        ##############
+        ##  UPHILL  ##
+        ##############
+        0.60000 # Start Lift
+        0.85000 # End Lift
+        0.90000 # End Rotation 1
+        0.98000 # Straight to starting point and Start Rotation 2
+        1.00000 # End Rotation 2
+
     ]
     keyValue [
         ##############
@@ -721,8 +742,16 @@ DEF skiPosInter PositionInterpolator {
         ##############
         ## STRAIGHT ##
         ##############
-    ]
-}
+
+        ##############
+        ##  UPHILL  ##
+        ##############
+        -137.50 0.00 284.00 # Start Lift
+        -137.50 0.00   0.00 # End Lift
+        -137.50 0.00   0.00 # End Rotation 1
+         -25.00 0.00   0.00 # Straight to starting point and Start Rotation 2
+         -25.00 0.00   0.00 # End Rotation 2
+    ]}
 
 ROUTE skiTimer.fraction_changed TO skiYOriInter.set_fraction
 ROUTE skiTimer.fraction_changed TO skiXOriInter.set_fraction
