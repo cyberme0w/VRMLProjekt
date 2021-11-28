@@ -1,0 +1,78 @@
+#VRML V2.0 utf8
+
+PROTO LiftSaule [
+]{
+    Transform {
+        children [
+            DEF VerticalCylinder Transform {
+                children [
+                    DEF Saule Shape {
+                        geometry Cylinder {
+                            bottom FALSE
+                            height 50
+                            radius 2
+                            side TRUE
+                            #solid TRUE
+                            top TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor .4 .3 .2 # Lighter Brown
+                            }
+                        }
+                    }
+                ]}
+            DEF HorizontalCylinder Transform {
+                translation 5 20 0
+                children [
+                    Transform {
+                        rotation 0 0 1 1.57 # Rz(-90) -> -pi/2
+                        children [
+                            Shape {
+                                geometry Cylinder {
+                                    bottom TRUE
+                                    top TRUE
+                                    height 15
+                                    radius 1
+                                    side TRUE
+                                    #solid TRUE
+                                }
+                                appearance Appearance {
+                                    material Material {
+                                        diffuseColor .3 .2 .1 # Darker brown
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]}
+            DEF SphereWithLight Transform {
+                translation 12.5 20 0
+                children [
+                    Shape {
+                        geometry Sphere {
+                            radius 2
+                            #solid TRUE
+                        }
+                        appearance Appearance {
+                            material Material {
+                                emissiveColor 0 1 0 # Green ilumination
+                            }
+                        }
+                    }
+                    SpotLight {
+                        ambientIntensity 0.1
+                        attenuation 0 .02 0 # Licht wird linear schwächer
+                        beamWidth 0.01 # 20 Grad
+                        color 0 1 0 # Grün
+                        cutOffAngle 0.78 # 45 Grad 
+                        direction 1 -1 0
+                        intensity 1.5
+                        radius 600 # Groß genug, dass keine unschönen Ecken zu sehen sind
+                        on TRUE
+                    }
+                ]
+            }
+        ]
+    }
+}
