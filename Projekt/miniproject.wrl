@@ -97,10 +97,10 @@ DEF Skifahrer Transform {
     translation 0 200 -401
     children [
         DEF Skifahrer1RotationX Transform {
-            rotation 0 0 0 0 # Rx(45)
+            rotation 1 0 0 0.78 # Rx(45)
             children [
                 DEF Skifahrer1 Transform {
-                    translation 0 0 0
+                    translation -25 0 0
                     children [
                         DEF Skifahrer1RotationY Transform {
                             rotation 0 0 0 0
@@ -421,7 +421,7 @@ DEF skiTimer TimeSensor {
     cycleInterval 30
     startTime 0
     enabled FALSE
-    loop FALSE}
+    loop TRUE}
 DEF skiXOriInter OrientationInterpolator {
     key [
         # START DOWNHILL
@@ -955,15 +955,7 @@ DEF Scr Script {
 
         function toggleSkifahrerAnimation(active) {
             if(active) {
-                m_enableSkifahrerAnimation = !m_enableSkifahrerAnimation;
-                // if(!m_enableSkifahrerAnimation) {
-                //     m_enableSkifahrerAnimation =
-                // }
-                // if(m_enableSkifahrerAnimation) {
-                //     m_enableSkifahrerAnimation = FALSE
-                // } else {
-                //     m_enableSkifahrerAnimation = TRUE
-                // }
+                m_enableSkifahrerAnimation = TRUE;
             }
         }
         "
