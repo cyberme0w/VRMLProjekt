@@ -13,11 +13,18 @@ PROTO Baum [
                             height 20
                             radius 1
                             side TRUE
-                            #solid TRUE
                         }
                         appearance Appearance {
+                            textureTransform TextureTransform {
+                                scale 5 10
+                            }
+                            texture ImageTexture {
+                                url "texture/bark-1024-colcor.png"
+                                repeatS TRUE
+                                repeatT TRUE
+                            }
                             material Material {
-                                diffuseColor .59 .29 0.1 # Brown TODO: Change to texture
+                                diffuseColor .59 .29 0.1 # Brown (damit noch reflektiert wird)
                             }
                         }
                     }
@@ -31,7 +38,6 @@ PROTO Baum [
                             bottomRadius 4
                             height 15
                             side TRUE
-                            #solid TRUE
                         }
                         appearance Appearance {
                             material Material {
