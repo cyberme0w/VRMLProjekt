@@ -233,17 +233,87 @@ DEF Bodenhang Transform {
 DEF Haus Transform {
     translation -130 10 -40
     children [
-        Shape {
-            geometry Box {
-                size 75 20 125
-                #solid TRUE
-            }
-            appearance Appearance {
-                material Material {
-                    diffuseColor .5 .5 .2
+        DEF Rickroll Transform {
+            children [
+                Shape {
+                    geometry Box {
+                        size 4 4 4
+                    }
+                    appearance Appearance {
+                        texture MovieTexture {
+                            url "texture/rickroll.mpg"
+                            loop TRUE
+                            startTime 0
+                            repeatS TRUE
+                            repeatT TRUE
+                            textureProperties NULL
+                        }
+                    }
                 }
-            }
+            ]
         }
+        DEF Door Transform {
+            translation 38 -3 0
+            children [
+                Shape {
+                    geometry Box {
+                        size .3 15 10
+                    }
+                    appearance Appearance {
+                        texture ImageTexture {
+                            url "texture/wood_door_01.png"
+                            repeatS TRUE
+                            repeatT TRUE
+                        }
+                        textureTransform TextureTransform {
+                            scale 1 1
+                        }
+                        material Material {
+                            diffuseColor 1 1 1
+                        }
+                    }
+                }
+            ]
+        }
+        DEF Base Transform {
+            children [
+                Shape {
+                    geometry Box {
+                        size 75 20 125
+                    }
+                    appearance Appearance {
+                        textureTransform TextureTransform {
+                            scale 20 3
+                        }
+                        texture ImageTexture {
+                            url "texture/bricks2.jpg"
+                            repeatS TRUE
+                            repeatT TRUE
+                        }
+                        material Material {
+                            diffuseColor 1 1 1 
+                        }
+                    }
+                }
+            ]
+        }
+        DEF Roof Transform {
+            translation 0 10 0
+            children [
+                Shape {
+                    geometry Box {
+                        size 85 5 135
+                    }
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor .1 .1 .1
+                        }
+                    }
+                }
+            ]
+        }
+        
+        
     ]}
 DEF LiftSaulen Transform {
     translation -150 25 -200
