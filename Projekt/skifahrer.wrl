@@ -2,6 +2,7 @@
 
 PROTO Skifahrer [
     field SFColor farbe 1 0 0 # default = red
+    field SFColor haut 1 .8 .6
     field SFString name "Unbekannter Dude"
     exposedField SFBool fackelAn FALSE
     exposedField SFFloat fackelTransparency 1.0
@@ -18,7 +19,7 @@ PROTO Skifahrer [
                         }
                         appearance Appearance {
                             material Material {
-                                diffuseColor IS farbe
+                                diffuseColor IS haut
                             }
                         }
                     }
@@ -230,13 +231,13 @@ PROTO Skifahrer [
                     Transform {
                         translation 1.225 0 0
                         children [
-                            Shape {
+                            DEF Hand Shape {
                                 geometry Sphere {
                                     radius 0.35
                                 }
                                 appearance Appearance {
                                     material Material {
-                                        diffuseColor 0.5 0.25 0.25
+                                        diffuseColor IS haut
                                     }
                                 }
                             }
@@ -308,7 +309,7 @@ PROTO Skifahrer [
                                 }
                                 appearance Appearance {
                                     material Material {
-                                        diffuseColor IS farbe
+                                        diffuseColor IS haut
                                     }
                                 }
                             }

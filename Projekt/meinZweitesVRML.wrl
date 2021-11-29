@@ -1,6 +1,6 @@
 #VRML V2.0 utf8
 PROTO TestPrisma [
-	field SFVec3f color 0 1 0 # default = grün
+	field SFColor color 0 1 0 # default = grün
 ] {
 	Shape {
 		geometry IndexedFaceSet {
@@ -111,14 +111,14 @@ Transform {
 			}
 			appearance Appearance {
 				material Material {
-					diffuseColor 0 1 0 # Rot
+					diffuseColor 1 0 0 # Rot
 				} 
 			}
 		}
 	]
 }
 
-#############################
+#############################################################
 ## Hier wird das zweite Prisma mit Punkt E auf 10 10 1 beschrieben
 ## (1) Durch die Größe des Prismas muss der Kegel nur auf 9 10 0 gestellt 
 ##     werden, damit E den richtigen Punkt erreicht
@@ -128,7 +128,7 @@ Transform {
 		Transform {
 			scale 1 2 1 # (2)
 			children [
-				TestPrisma { color 1 0 1 }
+				TestPrisma { color 0 1 0 }
 			]
 		}
 	]

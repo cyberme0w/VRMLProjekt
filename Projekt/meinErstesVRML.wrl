@@ -9,7 +9,7 @@ Transform{
 				Shape{ # Sphere
 					appearance Appearance{
 						material Material{
-							diffuseColor .0 .255 .0 # Green
+							diffuseColor 0 1 0 # Green
 						}
 					}
 					geometry Sphere{
@@ -21,7 +21,7 @@ Transform{
 		Shape{ # Box
 			appearance Appearance{
 				material Material{
-          			diffuseColor .255 .125 .0 # Orange
+          			diffuseColor 1 .65 0 # Orange
 				}
 			}
 			geometry Box{
