@@ -106,10 +106,12 @@ DEF Skifahrer Transform {
                             rotation 0 0 0 0
                             children [
                                 Group {
-                                    DEF Skifahrer1Sensor TouchSensor {
-                                        enabled TRUE
-                                    }
-                                    DEF Skifahrer1sub Skifahrer { farbe .5 0 0 name "Red" fackelAn FALSE }
+                                    children [
+                                        DEF Skifahrer1Sensor TouchSensor {
+                                            enabled TRUE
+                                        }
+                                        DEF Skifahrer1sub Skifahrer { farbe .5 0 0 name "Red" fackelAn FALSE }
+                                    ]
                                 }
                             ]
                         }
@@ -245,13 +247,13 @@ DEF Haus Transform {
                         size 4 4 4
                     }
                     appearance Appearance {
-                        texture MovieTexture {
-                            url "texture/rickroll.mpg"
-                            loop TRUE
-                            startTime 0
-                            repeatS TRUE
-                            repeatT TRUE
-                        }
+                        # texture MovieTexture {
+                        #     url "texture/rickroll.mpg"
+                        #     loop TRUE
+                        #     startTime 0
+                        #     repeatS TRUE
+                        #     repeatT TRUE
+                        # }
                     }
                 }
             ]
@@ -833,8 +835,6 @@ DEF skiPosInter PositionInterpolator {
          -25.00 0.00   0.00 # End Rotation 2
          -25.00 0.00   0.00 # Wait
     ]}
-
-ROUTE skiFahrerTouchSensor.isActive TO Scr.toggleSkifahrerAnimation
 
 ROUTE skiTimer.fraction_changed TO skiYOriInter.set_fraction
 ROUTE skiTimer.fraction_changed TO skiXOriInter.set_fraction
