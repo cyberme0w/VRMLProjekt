@@ -105,14 +105,19 @@ DEF Skifahrer Transform {
                         DEF Skifahrer1RotationY Transform {
                             rotation 0 0 0 0
                             children [
-                                DEF Skifahrer1sub Skifahrer { farbe .5 0 0 name "Red" fackelAn FALSE }
+                                Group {
+                                    DEF Skifahrer1Sensor TouchSensor {
+                                        enabled TRUE
+                                    }
+                                    DEF Skifahrer1sub Skifahrer { farbe .5 0 0 name "Red" fackelAn FALSE }
+                                }
                             ]
                         }
                     ]
                 }
             ]
         }
-        Transform {
+        DEF OtherSkifahrer Transform {
             rotation 1 0 0 0.78 # Rx(45)
             children [
                 DEF Skifahrer2 Transform {
@@ -246,7 +251,6 @@ DEF Haus Transform {
                             startTime 0
                             repeatS TRUE
                             repeatT TRUE
-                            textureProperties NULL
                         }
                     }
                 }
@@ -413,8 +417,9 @@ DEF LiftDach Transform {
 ###############
 DEF skiTimer TimeSensor {
     cycleInterval 30
-    enabled TRUE
-    loop TRUE}
+    startTime 0
+    enabled FALSE
+    loop FALSE}
 DEF skiXOriInter OrientationInterpolator {
     key [
         # START DOWNHILL
@@ -829,6 +834,8 @@ DEF skiPosInter PositionInterpolator {
          -25.00 0.00   0.00 # Wait
     ]}
 
+ROUTE skiFahrerTouchSensor.isActive TO Scr.toggleSkifahrerAnimation
+
 ROUTE skiTimer.fraction_changed TO skiYOriInter.set_fraction
 ROUTE skiTimer.fraction_changed TO skiXOriInter.set_fraction
 ROUTE skiTimer.fraction_changed TO skiPosInter.set_fraction
@@ -912,13 +919,16 @@ DEF LightsGroup Group {
 DEF Scr Script {
     eventIn SFBool toggleDaytime
     eventIn SFBool toggleLights
+    eventIn SFBool toggleSkifahrerAnimation
 
+    exposedField SFBool m_enableSkifahrerAnimation FALSE
     exposedField SFBool isDay FALSE
     exposedField SFBool isNight TRUE
     exposedField SFBool m_lightsOn FALSE
     exposedField SFFloat m_skyLightIntensity 0.6
     exposedField SFFloat m_fackelTransparency 1.0
     exposedField SFBool m_fackelAn FALSE
+
 
     url "javascript:
         function toggleDaytime(active) {
@@ -942,12 +952,26 @@ DEF Scr Script {
                 m_lightsOn = !m_lightsOn;
             }
         }
+
+        function toggleSkifahrerAnimation(active) {
+            if(active) {
+                if(m_enableSkifahrerAnimation) {
+                    m_enableSkifahrerAnimation = FALSE
+                } else {
+                    m_enableSkifahrerAnimation = TRUE
+                }
+            }
+        }
         "
 }
 
 # ROUTE Buttons
 ROUTE DayNightTouchSensor.isActive TO Scr.toggleDaytime
 ROUTE LightsTouchSensor.isActive TO Scr.toggleLights
+
+# ROUTE Skifahrer
+ROUTE Skifahrer1Sensor.isActive TO Scr.toggleSkifahrerAnimation
+ROUTE Scr.m_enableSkifahrerAnimation TO skiTimer.set_enabled
 
 # ROUTE Day/Night Skybox
 ROUTE Scr.isDay TO SkyboxDay.set_bind
