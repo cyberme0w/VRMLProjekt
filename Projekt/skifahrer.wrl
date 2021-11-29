@@ -3,7 +3,8 @@
 PROTO Skifahrer [
     field SFColor farbe 1 0 0 # default = red
     field SFString name "Unbekannter Dude"
-    field SFBool fackelAn TRUE
+    exposedField SFBool fackelAn FALSE
+    exposedField SFFloat fackelTransparency 1.0
 ]{
     Transform {
         children [
@@ -235,7 +236,7 @@ PROTO Skifahrer [
                                 }
                                 appearance Appearance {
                                     material Material {
-                                        diffuseColor IS farbe
+                                        diffuseColor 0.5 0.25 0.25
                                     }
                                 }
                             }
@@ -243,10 +244,26 @@ PROTO Skifahrer [
                             DEF TorchLight Transform {
                                 translation 0 2.5 0
                                 children [
+                                    Transform {
+                                        translation 0 3 0
+                                        children [
+                                            Shape {
+                                                geometry Sphere {
+                                                    radius 1
+                                                }
+                                                appearance Appearance {
+                                                    material Material {
+                                                        emissiveColor 1 0 0
+                                                        transparency IS fackelTransparency
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
                                     Shape {
                                         geometry Cylinder {
-                                            top IS fackelAn
-                                            side IS fackelAn
+                                            top TRUE
+                                            side TRUE
                                             bottom TRUE
                                             height 5
                                             radius 0.2
@@ -254,22 +271,14 @@ PROTO Skifahrer [
                                         appearance Appearance {
                                             material Material {
                                                 diffuseColor 1 0 0
+                                                transparency IS fackelTransparency
                                             }
                                         }
                                     }
                                     Transform {
                                         translation 0 2.5 0
-                                        children [
-                                            # PointLight {
-                                            #     ambientIntensity 0
-                                            #     color 1 1 1
-                                            #     global TRUE
-                                            #     intensity 1
-                                            #     on TRUE
-                                            # }
-                                            
+                                        children [ 
                                             DEF HalfTorch SpotLight {
-                                                #global TRUE
                                                 ambientIntensity 0.1
                                                 attenuation 0 0.1 0
                                                 color 1 0.1 0.1

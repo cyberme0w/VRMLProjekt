@@ -7,88 +7,15 @@
 EXTERNPROTO Skifahrer [ 
     field SFColor farbe
     field SFString name
-    field SFBool fackelAn
-    ] "skifahrer.wrl"
+    exposedField SFBool fackelAn
+    exposedField SFFloat fackelTransparency
+] "skifahrer.wrl"
 EXTERNPROTO Baum [] "baum.wrl"
-EXTERNPROTO LiftSaule [] "liftsaule.wrl"
+EXTERNPROTO LiftSaule [
+    exposedField SFBool lightsOn
+] "liftsaule.wrl"
 
-##########################################
-## DAY-NIGHT                            ##
-## Handles Background and Light changes ##
-##########################################
 
-Group {
-    children [
-        DEF Day Background {
-            topUrl "skybox/day/miramar_up.tga"
-            bottomUrl "skybox/day/miramar_dn.tga"
-            frontUrl "skybox/day/miramar_rt.tga"
-            backUrl "skybox/day/miramar_lf.tga"
-            leftUrl "skybox/day/miramar_bk.tga"
-            rightUrl "skybox/day/miramar_ft.tga"
-        }
-
-        # DEF Night Background {
-        #     topUrl "skybox/night/ypos.png"
-        #     bottomUrl "skybox/night/yneg.png"
-        #     frontUrl "skybox/night/zpos.png"
-        #     backUrl "skybox/night/zneg.png"
-        #     leftUrl "skybox/night/xneg.png"
-        #     rightUrl "skybox/night/xpos.png"
-        # }
-
-        DEF DayLight DirectionalLight {
-            ambientIntensity 0.2
-            color 1 1 1
-            #global TRUE
-            intensity 0.05
-            on TRUE
-            direction 0 -1 0
-        }
-
-        # TODO
-        DEF DayNightButton SphereSensor {
-            offset 0 1 0 0
-            autoOffset TRUE
-        }
-
-        # TODO
-        DEF LightButton SphereSensor {
-            offset 0 1 0 0
-            autoOffset TRUE
-        }
-    ]
-}
-
-Script {
-    field SFBool buttonPressed FALSE
-    field SFBool isDay TRUE
-    
-    field SFString topUrl "skybox/day/miramar_up.tga"
-    field SFString bottomUrl "skybox/day/miramar_dn.tga"
-    field SFString frontUrl "skybox/day/miramar_rt.tga"
-    field SFString backUrl "skybox/day/miramar_lf.tga"
-    field SFString leftUrl "skybox/day/miramar_bk.tga"
-    field SFString rightUrl "skybox/day/miramar_ft.tga"
-
-    field SFFloat ambientLightIntensity 0.5
-
-    url "JavaScript:
-        function buttonPressed(value, timestamp) {
-            if(isDay && value) {
-                // SET SKYBOX
-                topUrl = 'skybox/night/ypos.png';
-                bottomUrl = 'skybox/night/yneg.png';
-                frontUrl = 'skybox/night/zpos.png';
-                backUrl = 'skybox/night/zneg.png';
-                leftUrl = 'skybox/night/xneg.png';
-                rightUrl = 'skybox/night/xpos.png';
-
-                // MAKE AMBIENT LIGHT DARKER
-                ambientLightIntensity = 0.1;
-            }
-        }"
-}
 
 
 ################
@@ -178,7 +105,7 @@ DEF Skifahrer Transform {
                         DEF Skifahrer1RotationY Transform {
                             rotation 0 0 0 0
                             children [
-                                Skifahrer { farbe .5 0 0 name "Red" fackelAn TRUE}
+                                DEF Skifahrer1sub Skifahrer { farbe .5 0 0 name "Red" fackelAn FALSE }
                             ]
                         }
                     ]
@@ -190,19 +117,19 @@ DEF Skifahrer Transform {
             children [
                 DEF Skifahrer2 Transform {
                     children [
-                        Skifahrer { farbe 0 0.5 0 name "Green" fackelAn FALSE }
+                        DEF Skifahrer2sub Skifahrer { farbe 0 0.5 0 name "Green" fackelAn FALSE }
                     ]
                 }
                 DEF Skifahrer3 Transform {
                     translation 25 0 0
                     children [
-                        Skifahrer { farbe 0 0 0.5 name "Blue" fackelAn FALSE }
+                        DEF Skifahrer3sub Skifahrer { farbe 0 0 0.5 name "Blue" fackelAn FALSE }
                     ]
                 }
                 DEF Skifahrer3 Transform {
                     translation 50 0 0
                     children [
-                        Skifahrer { farbe 1.0 1.0 0.0 name "Yellow" fackelAn FALSE }
+                        DEF Skifahrer4sub Skifahrer { farbe 1.0 1.0 0.0 name "Yellow" fackelAn FALSE }
                     ]
                 }
             ]
@@ -324,27 +251,27 @@ DEF LiftSaulen Transform {
         DEF Saule1 Transform {
             translation 0 -5 0
             children [
-                LiftSaule {}
+                DEF Lampe1 LiftSaule { lightsOn FALSE }
             ]}
         DEF Saule2 Transform {
             translation 0 45 -50 # TODO 
             children [
-                LiftSaule {}
+                DEF Lampe2 LiftSaule { lightsOn FALSE }
             ]}
         DEF Saule3 Transform {
             translation 0 95 -100 # TODO
             children [
-                LiftSaule {}
+                DEF Lampe3 LiftSaule { lightsOn FALSE }
             ]}
         DEF Saule4 Transform {
             translation 0 145 -150 # TODO
             children [
-                LiftSaule {}
+                DEF Lampe4 LiftSaule { lightsOn FALSE }
             ]}
         DEF Saule5 Transform {
             translation 0 195 -200 # TODO
             children [
-                LiftSaule {}
+                DEF Lampe5 LiftSaule { lightsOn FALSE }
             ]}
     ]}
 DEF LiftDach Transform {
@@ -842,19 +769,135 @@ ROUTE skiPosInter.value_changed TO Skifahrer1.set_translation
 
 
 
+###################################
+## BACKGROUND, SCRIPTS AND LIGHT ##
+###################################
 
+DEF Skylight DirectionalLight {
+    on TRUE
+    intensity 0.6
+    ambientIntensity 0
+    color 1 1 1
+    direction 0.2 -1 0.2}
 
+DEF SkyboxNight Background {
+    topUrl "skybox/day/miramar_up.png"
+    bottomUrl "skybox/day/miramar_dn.png"
+    frontUrl "skybox/day/miramar_rt.png"
+    backUrl "skybox/day/miramar_lf.png"
+    leftUrl "skybox/day/miramar_bk.png"
+    rightUrl "skybox/day/miramar_ft.png"}
+DEF SkyboxDay Background {
+    topUrl "skybox/night/ypos.png"
+    bottomUrl "skybox/night/yneg.png"
+    frontUrl "skybox/night/zpos.png"
+    backUrl "skybox/night/zneg.png"
+    leftUrl "skybox/night/xneg.png"
+    rightUrl "skybox/night/xpos.png"}
 
+DEF DayNightGroup Group {
+    children [
+        DEF DayNightButton Transform { 
+            translation 120 200 125
+            children [
+                Shape {
+                    geometry Sphere {
+                        radius 10
+                    }
+                    appearance Appearance {
+                        material Material {
+                            emissiveColor .3 .3 .3
+                        }
+                    }
+                }
+            ]
+        }
+        DEF DayNightTouchSensor TouchSensor {
+            enabled TRUE
+        }
+    ]}
 
+DEF LightsGroup Group {
+    children [
+        DEF LightsButton Transform { 
+            translation 120 175 125
+            children [
+                Shape {
+                    geometry Sphere {
+                        radius 10
+                    }
+                    appearance Appearance {
+                        material Material {
+                            emissiveColor .3 .3 .3
+                        }
+                    }
+                }
+            ]
+        }
+        DEF LightsTouchSensor TouchSensor {
+            enabled TRUE
+        }
+    ]}
 
+DEF Scr Script {
+    eventIn SFBool toggleDaytime
+    eventIn SFBool toggleLights
 
+    exposedField SFBool isDay FALSE
+    exposedField SFBool isNight TRUE
+    exposedField SFBool m_lightsOn FALSE
+    exposedField SFFloat m_skyLightIntensity 0.6
+    exposedField SFFloat m_fackelTransparency 1.0
+    exposedField SFBool m_fackelAn FALSE
 
+    url "javascript:
+        function toggleDaytime(active) {
+            if(active) {
+                isDay = !isDay;
+                isNight = !isNight;
+                m_fackelAn = !m_fackelAn;
 
+                if(isNight) {
+                    m_skyLightIntensity = 0.6;
+                    m_fackelTransparency = 1.0;
+                } else {
+                    m_skyLightIntensity = 0.2;
+                    m_fackelTransparency = 0.0;
+                }
+            }
+        }
+        
+        function toggleLights(active) {
+            if(active) {
+                m_lightsOn = !m_lightsOn;
+            }
+        }
+        "
+}
 
+# ROUTE Buttons
+ROUTE DayNightTouchSensor.isActive TO Scr.toggleDaytime
+ROUTE LightsTouchSensor.isActive TO Scr.toggleLights
 
+# ROUTE Day/Night Skybox
+ROUTE Scr.isDay TO SkyboxDay.set_bind
+ROUTE Scr.isNight TO SkyboxNight.set_bind
 
+# ROUTE Day/Night SkyLightIntensity
+ROUTE Scr.m_skyLightIntensity TO Skylight.set_intensity
 
+# ROUTE Day/Night Fackeln + Hide when day
+ROUTE Scr.m_fackelAn TO Skifahrer1sub.set_fackelAn
+ROUTE Scr.m_fackelAn TO Skifahrer2sub.set_fackelAn
+ROUTE Scr.m_fackelAn TO Skifahrer3sub.set_fackelAn
+ROUTE Scr.m_fackelAn TO Skifahrer4sub.set_fackelAn
+ROUTE Scr.m_fackelTransparency TO Skifahrer1sub.set_fackelTransparency
+ROUTE Scr.m_fackelTransparency TO Skifahrer2sub.set_fackelTransparency
+ROUTE Scr.m_fackelTransparency TO Skifahrer3sub.set_fackelTransparency
+ROUTE Scr.m_fackelTransparency TO Skifahrer4sub.set_fackelTransparency
 
-
-
-
+ROUTE Scr.m_lightsOn TO Lampe1.set_lightsOn
+ROUTE Scr.m_lightsOn TO Lampe2.set_lightsOn
+ROUTE Scr.m_lightsOn TO Lampe3.set_lightsOn
+ROUTE Scr.m_lightsOn TO Lampe4.set_lightsOn
+ROUTE Scr.m_lightsOn TO Lampe5.set_lightsOn
