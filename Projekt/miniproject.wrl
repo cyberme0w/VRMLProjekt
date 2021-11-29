@@ -955,11 +955,15 @@ DEF Scr Script {
 
         function toggleSkifahrerAnimation(active) {
             if(active) {
-                if(m_enableSkifahrerAnimation) {
-                    m_enableSkifahrerAnimation = FALSE
-                } else {
-                    m_enableSkifahrerAnimation = TRUE
-                }
+                m_enableSkifahrerAnimation = !m_enableSkifahrerAnimation;
+                // if(!m_enableSkifahrerAnimation) {
+                //     m_enableSkifahrerAnimation =
+                // }
+                // if(m_enableSkifahrerAnimation) {
+                //     m_enableSkifahrerAnimation = FALSE
+                // } else {
+                //     m_enableSkifahrerAnimation = TRUE
+                // }
             }
         }
         "
