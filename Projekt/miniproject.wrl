@@ -419,9 +419,8 @@ DEF LiftDach Transform {
 ###############
 DEF skiTimer TimeSensor {
     cycleInterval 30
-    startTime 0
-    enabled FALSE
-    loop TRUE}
+    enabled TRUE
+    loop FALSE}
 DEF skiXOriInter OrientationInterpolator {
     key [
         # START DOWNHILL
@@ -836,6 +835,7 @@ DEF skiPosInter PositionInterpolator {
          -25.00 0.00   0.00 # Wait
     ]}
 
+ROUTE Skifahrer1Sensor.touchTime TO skiTimer.startTime
 ROUTE skiTimer.fraction_changed TO skiYOriInter.set_fraction
 ROUTE skiTimer.fraction_changed TO skiXOriInter.set_fraction
 ROUTE skiTimer.fraction_changed TO skiPosInter.set_fraction
@@ -952,22 +952,12 @@ DEF Scr Script {
                 m_lightsOn = !m_lightsOn;
             }
         }
-
-        function toggleSkifahrerAnimation(active) {
-            if(active) {
-                m_enableSkifahrerAnimation = TRUE;
-            }
-        }
         "
 }
 
 # ROUTE Buttons
 ROUTE DayNightTouchSensor.isActive TO Scr.toggleDaytime
 ROUTE LightsTouchSensor.isActive TO Scr.toggleLights
-
-# ROUTE Skifahrer
-ROUTE Skifahrer1Sensor.isActive TO Scr.toggleSkifahrerAnimation
-ROUTE Scr.m_enableSkifahrerAnimation TO skiTimer.set_enabled
 
 # ROUTE Day/Night Skybox
 ROUTE Scr.isDay TO SkyboxDay.set_bind
