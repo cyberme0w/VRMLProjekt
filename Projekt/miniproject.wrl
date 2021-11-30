@@ -247,13 +247,13 @@ DEF Haus Transform {
                         size 4 4 4
                     }
                     appearance Appearance {
-                        # texture MovieTexture {
-                        #     url "texture/rickroll.mpg"
-                        #     loop TRUE
-                        #     startTime 0
-                        #     repeatS TRUE
-                        #     repeatT TRUE
-                        # }
+                        texture MovieTexture {
+                            url "texture/rickroll.mpg"
+                            loop TRUE
+                            startTime 0
+                            repeatS TRUE
+                            repeatT TRUE
+                        }
                     }
                 }
             ]

@@ -163,7 +163,7 @@ Datei genügen dürfte. Hier eine Liste der Aufgaben, die erledigt wurden.
     \item V5:
     \begin{itemize}
         \item a) Grüne Scheinwerfer - \textbf{DONE}
-        \item b) (Zusatz) Lichtkegel
+        \item b) (Zusatz) Lichtkegel - \textbf{DONE}
     \end{itemize}
     \item V6:
     \begin{itemize}
@@ -173,15 +173,15 @@ Datei genügen dürfte. Hier eine Liste der Aufgaben, die erledigt wurden.
     \item V7:
     \begin{itemize}
         \item a) Skifahrer Animation (Gerade + Kreis) - \textbf{DONE}
-        \item b) Klick auf Skifahrer für Animation
+        \item b) Klick auf Skifahrer für Animation -\textbf{DONE}
         \item c) Schlitten verfolgt Skifahrer
     \end{itemize}
     \item V8:
     \begin{itemize}
-        \item a) Kastenhaus + Baum Texturen
+        \item a) Kastenhaus + Baum Texturen - \textbf{DONE}
         \item b) Nachtskifahren + Fackel - \textbf{DONE}
     \end{itemize}
-    \item V9 (Zusatz): Verschönerungen
+    \item V9 (Zusatz): Verschönerungen - \textbf{DONE}
 \end{itemize}
 
 
@@ -203,6 +203,85 @@ Herrn Dörner gemacht und soll kein Problem darstellen.
     \includegraphics[scale=0.5]{skifahrer_sketch.pdf}
     \caption{Erste Skizze des Skifahrers}
 \end{figure}
+
+\subsubsection*{V9}
+Es wurden zwei Verschönerungen durchgeführt. folgendes gemacht:
+
+Die erste Verschönerung war die Verbesserung der Skifahrt auf kurvengenauen Pfaden.
+Die Punkte wurden mit einem selbstgeschriebenen Pythonskript ausgerechnet und können
+somit beliebig genau sein. Die Datei ist ebenfalls im Ordner enthalten.
+
+\begin{lstlisting}[language=Python]
+    import numpy as np
+    import math as m
+    
+    def calculatePointsWithinAngle(ammount, centerX, centerY, radius, startTime, endTime, startAngle, endAngle):
+    
+        # calculate increments and create array
+        angleIncrement = (endAngle - startAngle) / (ammount + 1)
+        timeIncrement = (endTime - startTime) / (ammount + 1)
+        points = np.zeros((ammount + 2, 4), dtype=float)
+    
+        # calculate each point
+        for i in range(ammount + 2):
+            currentAngle = startAngle + angleIncrement * i
+            currentTime = startTime + timeIncrement * i
+            
+            # x value
+            points[i][0] = centerX + radius * m.cos(m.radians(currentAngle))
+    
+            # y value
+            points[i][1] = centerY + radius * m.sin(m.radians(currentAngle))
+            
+            # rotation (depending on clockwise/counterclockwise)
+            if(angleIncrement > 0):
+                points[i][2] = m.radians(currentAngle + 90)
+            else:
+                points[i][2] = m.radians(currentAngle - 90)
+    
+            # time
+            points[i][3] = currentTime
+    
+        return points
+    
+    def printVRMLfromPoints(points):
+    
+        print("\npositions:")
+        print("key [")
+        for point in points:
+            print("{:.5f}".format(point[3]))
+        print("]")
+        print("keyValue [")
+        for point in points:
+            print("{:.2f} {:.2f} {:.2f}".format(point[0], 0.0, point[1]))
+        print("]")
+    
+        print("\norientations:")
+        print("key [")
+        for point in points:
+            print("{:.5f}".format(point[3]))
+        print("]")
+        print("keyValue [")
+        for point in points:
+            print("0 1 0 {:.2f}".format(point[2]))
+        print("]")
+
+    # Beispieleingabe
+    center = (-48.5, 282)
+    radius = 23.5
+    ammount = 10
+    startTime = 0.23
+    endTime = 0.30
+    startAngle = 0
+    endAngle = -90
+    
+    points = calculatePointsWithinAngle(ammount, center[0], center[1], radius, startTime, endTime, startAngle, endAngle)
+    printVRMLfromPoints(points)
+\end{lstlisting}
+
+erstens die Skifahrt am Berghang kurvengenau
+durchgeführt, mithilfe eines selbstgeschriebenen Pythonskripts.
+
 
 
 
